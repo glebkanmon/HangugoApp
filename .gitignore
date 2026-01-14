@@ -1,0 +1,72 @@
+# =========================
+# Xcode
+# =========================
+DerivedData/
+.build/
+*.xcuserstate
+*.xcuserdatad
+*.xccheckout
+*.xcscmblueprint
+
+# =========================
+# Build
+# =========================
+build/
+Build/
+
+# =========================
+# User settings
+# =========================
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Swift Package Manager
+# =========================
+Packages/
+Package.resolved
+.swiftpm/
+
+# =========================
+# CocoaPods
+# =========================
+Pods/
+Podfile.lock
+
+# =========================
+# Carthage
+# =========================
+Carthage/Build/
+
+# =========================
+# Fastlane
+# =========================
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+Secrets.plist
+GoogleService-Info.plist
+
+# =========================
+# macOS
+# =========================
+.DS_Store
+
