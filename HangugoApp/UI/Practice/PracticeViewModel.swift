@@ -11,7 +11,7 @@ final class PracticeViewModel: ObservableObject {
 
     private let provider: LLMProvider
 
-    init(provider: LLMProvider = DeepSeekProviderDirect(apiKey: "")) {
+    init(provider: LLMProvider = DeepSeekProviderDirect(apiKey: Secrets.deepSeekApiKey)) {
         self.provider = provider
     }
 
