@@ -42,13 +42,20 @@ final class DeepSeekProviderDirect: LLMProvider {
     func checkSentenceJSON(koreanInput: String, includeStage2: Bool) async throws -> String {
         // 1) пробуем обычным лимитом
         do {
-            return try await requestOnce(koreanInput: koreanInput, includeStage2: includeStage2, maxTokens: includeStage2 ? 2600 : 1400)
+            return try await requestOnce(
+                koreanInput: koreanInput,
+                includeStage2: includeStage2,
+                maxTokens: includeStage2 ? 3000 : 1500
+            )
         } catch DeepSeekError.truncated {
             // 2) если обрезало — ретрай с большим лимитом
-            return try await requestOnce(koreanInput: koreanInput, includeStage2: includeStage2, maxTokens: 3800)
+            return try await requestOnce(
+                koreanInput: koreanInput,
+                includeStage2: includeStage2,
+                maxTokens: 4096
+            )
         }
     }
-    
     private func requestOnce(koreanInput: String, includeStage2: Bool, maxTokens: Int) async throws -> String {
         let model = includeStage2 ? "deepseek-reasoner" : "deepseek-chat"
         let url = baseURL.appendingPathComponent("chat/completions")
