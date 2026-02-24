@@ -16,14 +16,14 @@ struct NewWordsSessionView: View {
             Section {
                 ProgressView(value: vm.progress)
                 HStack {
-                    Text("\(L10n.Learn.progressPrefix) \(vm.masteredCount) / \(vm.goal)")
+                    Text("\(L10n.NewWordsSession.progressPrefix) \(vm.masteredCount) / \(vm.goal)")
                         .foregroundStyle(.secondary)
                     Spacer()
                 }
             }
 
             if let error = vm.errorMessage {
-                Section(L10n.Learn.errorSection) {
+                Section(L10n.NewWordsSession.errorSection) {
                     Text(error)
                         .foregroundStyle(.secondary)
                 }
@@ -31,16 +31,16 @@ struct NewWordsSessionView: View {
 
             if vm.goal == 0 {
                 Section {
-                    Text(L10n.Learn.noNewWordsTitle)
+                    Text(L10n.NewWordsSession.noNewWordsTitle)
                         .font(.headline)
-                    Text(L10n.Learn.noNewWordsSubtitle)
+                    Text(L10n.NewWordsSession.noNewWordsSubtitle)
                         .foregroundStyle(.secondary)
                 }
             } else if vm.isFinished {
                 Section {
-                    Text(L10n.Learn.finishedTitle)
+                    Text(L10n.NewWordsSession.finishedTitle)
                         .font(.headline)
-                    Text(L10n.Learn.finishedSubtitle)
+                    Text(L10n.NewWordsSession.finishedSubtitle)
                         .foregroundStyle(.secondary)
                 }
             } else if let item = vm.currentItem {
@@ -49,7 +49,6 @@ struct NewWordsSessionView: View {
                         Text(item.word.korean)
                             .font(.system(size: 34, weight: .semibold))
 
-                        // ЕДИНЫЙ блок "ответ" (перевод + картинка), скрываем/раскрываем вместе
                         revealableAnswerBlock(
                             isRevealed: isAnswerShown,
                             hint: L10n.Common.hintTapToRevealAll,
@@ -110,7 +109,7 @@ struct NewWordsSessionView: View {
                             isAnswerShown = false
                             vm.markAlreadyKnown()
                         } label: {
-                            Text(L10n.Learn.btnAlreadyKnow)
+                            Text(L10n.NewWordsSession.btnAlreadyKnow)
                                 .fontWeight(.semibold)
                         }
 
@@ -118,7 +117,7 @@ struct NewWordsSessionView: View {
                             isAnswerShown = false
                             vm.startLearning()
                         } label: {
-                            Text(L10n.Learn.btnStartLearning)
+                            Text(L10n.NewWordsSession.btnStartLearning)
                                 .fontWeight(.semibold)
                         }
 
@@ -127,7 +126,7 @@ struct NewWordsSessionView: View {
                             isAnswerShown = false
                             vm.showLater()
                         } label: {
-                            Text(L10n.Learn.btnShowLater)
+                            Text(L10n.NewWordsSession.btnShowLater)
                                 .fontWeight(.semibold)
                         }
 
@@ -135,24 +134,23 @@ struct NewWordsSessionView: View {
                             isAnswerShown = false
                             vm.markMastered()
                         } label: {
-                            Text(L10n.Learn.btnMastered)
+                            Text(L10n.NewWordsSession.btnMastered)
                                 .fontWeight(.semibold)
                         }
                     }
                 }
             } else {
                 Section {
-                    Text(L10n.Learn.loading)
+                    Text(L10n.NewWordsSession.loading)
                         .foregroundStyle(.secondary)
                 }
             }
         }
-        // ✅ Надёжный iOS 16 фикс: при смене слова List пересоздаётся -> скролл наверх
         .id(vm.currentItem?.id ?? "no_word")
         .onChange(of: vm.currentItem?.id) { _ in
             isAnswerShown = false
         }
-        .navigationTitle(L10n.Learn.navTitleNewWords)
+        .navigationTitle(L10n.NewWordsSession.navTitle)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             // Стартуем один раз при первом появлении
@@ -163,7 +161,7 @@ struct NewWordsSessionView: View {
         }
     }
 
-    // MARK: - Helper: revealable answer block (single hint for translation + image)
+    // MARK: - Helper: revealable answer block
     @ViewBuilder
     private func revealableAnswerBlock<Content: View>(
         isRevealed: Bool,

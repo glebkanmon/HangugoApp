@@ -1,3 +1,5 @@
+// UI/Learn/LearnView.swift
+
 import SwiftUI
 
 struct LearnView: View {
@@ -5,16 +7,35 @@ struct LearnView: View {
 
     var body: some View {
         List {
-            Section("Сессии") {
-
+            // ✅ Фильтры — в самом верху
+            Section(L10n.Learn.filtersSection) {
                 NavigationLink {
-                    NewWordsSessionView(words: vm.words)
+                    CategoryPickerView(words: vm.words)
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                            .foregroundStyle(.primary)
+
+                        Text(L10n.Learn.categories)
+
+                        Spacer()
+
+                        Text(vm.categoriesSummary)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .disabled(vm.words.isEmpty)
+            }
+
+            Section(L10n.Learn.sessionsSection) {
+                NavigationLink {
+                    NewWordsSessionView(words: vm.wordsForLearning)
                 } label: {
                     HStack(spacing: 12) {
                         Image(systemName: "sparkles")
                             .foregroundStyle(.primary)
 
-                        Text("Новые слова")
+                        Text(L10n.Learn.newWords)
 
                         Spacer()
 
@@ -22,7 +43,7 @@ struct LearnView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                .disabled(vm.newWordsAvailable == 0 || vm.words.isEmpty)
+                .disabled(vm.newWordsAvailable == 0 || vm.wordsForLearning.isEmpty)
 
                 NavigationLink {
                     ReviewView()
@@ -31,7 +52,7 @@ struct LearnView: View {
                         Image(systemName: "clock")
                             .foregroundStyle(.primary)
 
-                        Text("Повторить сегодня")
+                        Text(L10n.Learn.reviewToday)
 
                         Spacer()
 
@@ -41,27 +62,27 @@ struct LearnView: View {
                 }
             }
 
-            Section("Хангыль") {
-                Label("Алфавит (скоро)", systemImage: "textformat.abc")
+            Section(L10n.Learn.hangulSection) {
+                Label(L10n.Learn.soonAlphabet, systemImage: "textformat.abc")
                     .foregroundStyle(.primary)
 
-                Label("Слоги (скоро)", systemImage: "square.grid.2x2")
+                Label(L10n.Learn.soonSyllables, systemImage: "square.grid.2x2")
                     .foregroundStyle(.primary)
 
-                Label("Чтение (скоро)", systemImage: "book.pages")
+                Label(L10n.Learn.soonReading, systemImage: "book.pages")
                     .foregroundStyle(.primary)
             }
 
-            Section("Слова") {
+            Section(L10n.Learn.wordsSection) {
                 if let error = vm.errorMessage {
                     Text(error).foregroundStyle(.secondary)
                 } else if vm.words.isEmpty {
-                    Text("Загрузка…").foregroundStyle(.secondary)
+                    Text(L10n.Learn.loading).foregroundStyle(.secondary)
                 } else {
                     NavigationLink {
                         WordsListView(words: vm.words)
                     } label: {
-                        Label("Все слова", systemImage: "list.bullet")
+                        Label(L10n.Learn.allWords, systemImage: "list.bullet")
                             .foregroundStyle(.primary)
                     }
 
@@ -74,7 +95,7 @@ struct LearnView: View {
                 }
             }
         }
-        .navigationTitle("Изучение")
+        .navigationTitle(L10n.Learn.navTitle)
         .onAppear { vm.load() }
     }
 }
