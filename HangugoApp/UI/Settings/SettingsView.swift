@@ -1,3 +1,5 @@
+// UI/Settings/SettingsView.swift
+
 import SwiftUI
 
 struct SettingsView: View {
@@ -6,26 +8,26 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("New words session") {
+            Section(L10n.Settings.newWordsSessionSection) {
                 Stepper(value: $newWordsPerSession, in: 1...50, step: 1) {
                     HStack {
-                        Text("Words per session")
+                        Text(L10n.Settings.wordsPerSession)
                         Spacer()
                         Text("\(newWordsPerSession)")
                             .foregroundStyle(.secondary)
                     }
                 }
 
-                Toggle("First review tomorrow", isOn: $firstReviewTomorrow)
+                Toggle(L10n.Settings.firstReviewTomorrow, isOn: $firstReviewTomorrow)
 
                 Text(firstReviewTomorrow
-                     ? "Words go to Review starting tomorrow."
-                     : "Words can appear in Review today.")
+                     ? L10n.Settings.firstReviewTomorrowOnHint
+                     : L10n.Settings.firstReviewTomorrowOffHint)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle(L10n.Settings.navTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -1,3 +1,5 @@
+// UI/Review/ReviewView.swift
+
 import SwiftUI
 
 struct ReviewView: View {
@@ -6,37 +8,37 @@ struct ReviewView: View {
 
     var body: some View {
         List {
-            Section("Today") {
+            Section(L10n.Review.todaySection) {
                 if let error = vm.errorMessage {
                     Text(error).foregroundStyle(.secondary)
                 } else {
-                    Text("Cards due today: \(vm.dueCount)")
+                    Text("\(L10n.Review.dueCountPrefix) \(vm.dueCount)")
                 }
             }
 
             if vm.dueCount == 0 {
                 Section {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("All done ✅")
+                        Text(L10n.Review.doneTitle)
                             .font(.headline)
-                        Text("You can practice sentences instead.")
+                        Text(L10n.Review.doneSubtitle)
                             .foregroundStyle(.secondary)
 
-                        NavigationLink("Go to Practice") {
+                        NavigationLink(L10n.Review.goToPractice) {
                             PracticeView()
                         }
                     }
                     .padding(.vertical, 4)
                 }
             } else if let word = vm.currentWord {
-                Section("Card") {
+                Section(L10n.Common.wordSection) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(word.korean)
                             .font(.system(size: 34, weight: .semibold))
 
                         revealableAnswerBlock(
                             isRevealed: isAnswerRevealed,
-                            hint: "Tap to reveal translation and image",
+                            hint: L10n.Common.hintTapToRevealAll,
                             hasImage: word.imageAssetName != nil
                         ) {
                             VStack(alignment: .leading, spacing: 10) {
@@ -63,7 +65,7 @@ struct ReviewView: View {
                 }
 
                 if let example = word.example, !example.isEmpty {
-                    Section("Example") {
+                    Section(L10n.Common.exampleSection) {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(example)
 
@@ -87,11 +89,11 @@ struct ReviewView: View {
                     }
                 }
 
-                Section("Rating") {
+                Section(L10n.Review.ratingSection) {
                     Button {
                         rateAndAdvance(.hard)
                     } label: {
-                        Label("Hard", systemImage: "tortoise")
+                        Label(L10n.Review.btnHard, systemImage: "tortoise")
                             .fontWeight(.semibold)
                     }
                     .disabled(!isAnswerRevealed)
@@ -99,7 +101,7 @@ struct ReviewView: View {
                     Button {
                         rateAndAdvance(.normal)
                     } label: {
-                        Label("Normal", systemImage: "figure.walk")
+                        Label(L10n.Review.btnNormal, systemImage: "figure.walk")
                             .fontWeight(.semibold)
                     }
                     .disabled(!isAnswerRevealed)
@@ -107,14 +109,14 @@ struct ReviewView: View {
                     Button {
                         rateAndAdvance(.easy)
                     } label: {
-                        Label("Easy", systemImage: "hare")
+                        Label(L10n.Review.btnEasy, systemImage: "hare")
                             .fontWeight(.semibold)
                     }
                     .disabled(!isAnswerRevealed)
                 }
             } else {
                 Section {
-                    Text("Could not find the word for the current SRS item.")
+                    Text(L10n.Review.missingWord)
                         .foregroundStyle(.secondary)
                 }
             }
@@ -123,7 +125,7 @@ struct ReviewView: View {
         .onChange(of: vm.currentWord?.id) { _ in
             isAnswerRevealed = false
         }
-        .navigationTitle("Review")
+        .navigationTitle(L10n.Review.navTitle)
         .onAppear {
             vm.load()
             isAnswerRevealed = false
@@ -152,7 +154,7 @@ struct ReviewView: View {
             HStack(spacing: 8) {
                 Image(systemName: "hand.tap")
                     .foregroundStyle(.secondary)
-                Text(hasImage ? hint : "Tap to reveal translation")
+                Text(hasImage ? hint : L10n.Common.hintTapToRevealTranslation)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

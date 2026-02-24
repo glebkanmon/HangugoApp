@@ -1,3 +1,5 @@
+// UI/Learn/NewWordsSessionView.swift
+
 import SwiftUI
 
 struct NewWordsSessionView: View {
@@ -14,14 +16,14 @@ struct NewWordsSessionView: View {
             Section {
                 ProgressView(value: vm.progress)
                 HStack {
-                    Text("Запомнил: \(vm.masteredCount) / \(vm.goal)")
+                    Text("\(L10n.Learn.progressPrefix) \(vm.masteredCount) / \(vm.goal)")
                         .foregroundStyle(.secondary)
                     Spacer()
                 }
             }
 
             if let error = vm.errorMessage {
-                Section("Ошибка") {
+                Section(L10n.Learn.errorSection) {
                     Text(error)
                         .foregroundStyle(.secondary)
                 }
@@ -29,20 +31,20 @@ struct NewWordsSessionView: View {
 
             if vm.goal == 0 {
                 Section {
-                    Text("Новых слов нет ✅")
+                    Text(L10n.Learn.noNewWordsTitle)
                         .font(.headline)
-                    Text("Можно перейти в повторение или практику предложений.")
+                    Text(L10n.Learn.noNewWordsSubtitle)
                         .foregroundStyle(.secondary)
                 }
             } else if vm.isFinished {
                 Section {
-                    Text("Сессия завершена ✅")
+                    Text(L10n.Learn.finishedTitle)
                         .font(.headline)
-                    Text("Слова добавлены в повторение.")
+                    Text(L10n.Learn.finishedSubtitle)
                         .foregroundStyle(.secondary)
                 }
             } else if let item = vm.currentItem {
-                Section("Слово") {
+                Section(L10n.Common.wordSection) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(item.word.korean)
                             .font(.system(size: 34, weight: .semibold))
@@ -50,7 +52,7 @@ struct NewWordsSessionView: View {
                         // ЕДИНЫЙ блок "ответ" (перевод + картинка), скрываем/раскрываем вместе
                         revealableAnswerBlock(
                             isRevealed: isAnswerShown,
-                            hint: "Нажми, чтобы показать перевод и картинку",
+                            hint: L10n.Common.hintTapToRevealAll,
                             hasImage: item.word.imageAssetName != nil
                         ) {
                             VStack(alignment: .leading, spacing: 10) {
@@ -77,7 +79,7 @@ struct NewWordsSessionView: View {
                 }
 
                 if let example = item.word.example, !example.isEmpty {
-                    Section("Пример") {
+                    Section(L10n.Common.exampleSection) {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(example)
 
@@ -108,7 +110,7 @@ struct NewWordsSessionView: View {
                             isAnswerShown = false
                             vm.markAlreadyKnown()
                         } label: {
-                            Text("Уже знаю")
+                            Text(L10n.Learn.btnAlreadyKnow)
                                 .fontWeight(.semibold)
                         }
 
@@ -116,7 +118,7 @@ struct NewWordsSessionView: View {
                             isAnswerShown = false
                             vm.startLearning()
                         } label: {
-                            Text("Начать учить")
+                            Text(L10n.Learn.btnStartLearning)
                                 .fontWeight(.semibold)
                         }
 
@@ -125,7 +127,7 @@ struct NewWordsSessionView: View {
                             isAnswerShown = false
                             vm.showLater()
                         } label: {
-                            Text("Показать ещё")
+                            Text(L10n.Learn.btnShowLater)
                                 .fontWeight(.semibold)
                         }
 
@@ -133,14 +135,14 @@ struct NewWordsSessionView: View {
                             isAnswerShown = false
                             vm.markMastered()
                         } label: {
-                            Text("Запомнил(а)")
+                            Text(L10n.Learn.btnMastered)
                                 .fontWeight(.semibold)
                         }
                     }
                 }
             } else {
                 Section {
-                    Text("Загружаем…")
+                    Text(L10n.Learn.loading)
                         .foregroundStyle(.secondary)
                 }
             }
@@ -150,9 +152,10 @@ struct NewWordsSessionView: View {
         .onChange(of: vm.currentItem?.id) { _ in
             isAnswerShown = false
         }
-        .navigationTitle("Новые слова")
+        .navigationTitle(L10n.Learn.navTitleNewWords)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
+            // Стартуем один раз при первом появлении
             if vm.goal == 0 && vm.masteredCount == 0 && vm.queue.isEmpty && vm.errorMessage == nil {
                 isAnswerShown = false
                 vm.start(words: words, sessionSize: newWordsPerSession, firstReviewTomorrow: firstReviewTomorrow)
@@ -178,7 +181,7 @@ struct NewWordsSessionView: View {
             HStack(spacing: 8) {
                 Image(systemName: "hand.tap")
                     .foregroundStyle(.secondary)
-                Text(hasImage ? hint : "Нажми, чтобы показать перевод")
+                Text(hasImage ? hint : L10n.Common.hintTapToRevealTranslation)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
