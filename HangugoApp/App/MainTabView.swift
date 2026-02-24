@@ -7,21 +7,21 @@ struct MainTabView: View {
                 LearnView()
             }
             .tabItem {
-                Label("Learn", systemImage: "book")
+                Label("Изучение", systemImage: "book")
             }
 
             NavigationStack {
                 PracticeView()
             }
             .tabItem {
-                Label("Practice", systemImage: "square.and.pencil")
+                Label("Практика", systemImage: "square.and.pencil")
             }
 
             NavigationStack {
-                ReviewView()
+                SettingsView()
             }
             .tabItem {
-                Label("Review", systemImage: "clock.arrow.circlepath")
+                Label("Настройки", systemImage: "gearshape")
             }
         }
     }

@@ -43,7 +43,7 @@ final class PracticeViewModel: ObservableObject {
     }
 
     var lastModeLabel: String {
-        lastIncludeStage2 ? "Deep" : "Check"
+        lastIncludeStage2 ? "Подробно" : "Проверить"
     }
 
     // MARK: - Actions

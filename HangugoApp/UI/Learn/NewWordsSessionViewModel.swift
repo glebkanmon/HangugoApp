@@ -4,120 +4,270 @@ import Combine
 @MainActor
 final class NewWordsSessionViewModel: ObservableObject {
 
+    // MARK: - Types
+    enum SessionState: Equatable {
+        case fresh     // ещё не приняли решение (первый показ)
+        case learning  // выбрали "Начать учить"
+    }
+
+    private enum Phase: Equatable {
+        case selecting     // набираем goal слов через "Начать учить"
+        case practicing    // крутим только learning-слова до "Запомнил(а)" на всех
+    }
+
+    struct SessionWord: Identifiable, Equatable {
+        let id: String
+        let word: Word
+        var state: SessionState
+
+        init(word: Word, state: SessionState) {
+            self.id = word.id
+            self.word = word
+            self.state = state
+        }
+    }
+
     // MARK: - Published state
-    @Published private(set) var queue: [Word] = []
+    @Published private(set) var queue: [SessionWord] = []
     @Published private(set) var goal: Int = 0
     @Published private(set) var masteredCount: Int = 0
     @Published var errorMessage: String?
 
     // MARK: - Dependencies
     private let srs: SRSService
+    private let known: KnownWordsService
 
     // MARK: - Config
     private let nearEndShuffleWindow: Int
     private var firstReviewTomorrow: Bool = true
 
+    /// Сколько элементов держим одновременно в очереди на этапе выбора.
+    private var targetQueueSize: Int = 0
+
+    // MARK: - Private state
+    private var remainingNewWords: [Word] = []
+    private var phase: Phase = .selecting
+
+    /// Набор слов, для которых нажали "Начать учить"
+    private var learningWordIds: Set<String> = []
 
     init(
         srs: SRSService = SRSService(store: FileSRSStore()),
+        known: KnownWordsService = KnownWordsService(store: FileKnownWordsStore()),
         nearEndShuffleWindow: Int = 3,
         firstReviewTomorrow: Bool = true
     ) {
         self.srs = srs
+        self.known = known
         self.nearEndShuffleWindow = max(1, nearEndShuffleWindow)
         self.firstReviewTomorrow = firstReviewTomorrow
     }
 
     // MARK: - Computed
-    var currentWord: Word? { queue.first }
-    var isFinished: Bool { goal > 0 && masteredCount >= goal || (goal > 0 && queue.isEmpty) }
+    var currentItem: SessionWord? { queue.first }
+    var currentWord: Word? { queue.first?.word }
 
-    /// 0...1 для ProgressView(value:)
+    var isFinished: Bool { goal > 0 && masteredCount >= goal }
+
     var progress: Double {
         guard goal > 0 else { return 0 }
         return min(1.0, Double(masteredCount) / Double(goal))
     }
 
+    private var learningCount: Int { learningWordIds.count }
+
     // MARK: - Session start
-    /// words: все слова из словаря
-    /// sessionSize: настройка "N новых слов за сессию"
     func start(words: [Word], sessionSize: Int, firstReviewTomorrow: Bool) {
         self.firstReviewTomorrow = firstReviewTomorrow
+
         do {
             try srs.load()
+            try known.load()
 
-            // Новые слова = те, которых ещё нет в SRS
-            // (самый надёжный критерий "в изучении/повторении")
-            let existingIds = Set(srsAllWordIds())
+            learningWordIds = []
+            phase = .selecting
 
-            let newWords = words.filter { !existingIds.contains($0.id) }
+            let srsIds = Set(srs.allWordIds())
+            let knownIds = Set(known.allWordIds())
+
+            // Новые слова = не в SRS и не в Known
+            var newWords = words.filter { !srsIds.contains($0.id) && !knownIds.contains($0.id) }
+            newWords.shuffle()
 
             let size = max(0, sessionSize)
             goal = min(size, newWords.count)
             masteredCount = 0
             errorMessage = nil
 
-            // Берём первые goal слов (позже можно рандом/умный выбор)
-            queue = Array(newWords.prefix(goal))
+            guard goal > 0 else {
+                queue = []
+                remainingNewWords = []
+                targetQueueSize = 0
+                return
+            }
+
+            // На этапе выбора держим небольшой пул
+            targetQueueSize = min(goal, 5)
+
+            let initial = Array(newWords.prefix(targetQueueSize))
+            queue = initial.map { SessionWord(word: $0, state: .fresh) }
+
+            remainingNewWords = Array(newWords.dropFirst(targetQueueSize))
         } catch {
             errorMessage = error.localizedDescription
             queue = []
+            remainingNewWords = []
             goal = 0
             masteredCount = 0
+            targetQueueSize = 0
+            learningWordIds = []
+            phase = .selecting
         }
     }
 
-    // MARK: - Actions
-    /// Пользователь: "Пока нет"
-    func markNotYet() {
+    // MARK: - Actions (Fresh)
+    /// "Уже знаю" — помечаем Known, заменяем на другое новое слово
+    /// Важно: заменяем только пока не набрали learningCount == goal.
+    func markAlreadyKnown() {
+        guard let item = queue.first else { return }
+
+        do {
+            _ = queue.removeFirst()
+
+            known.addKnown(wordId: item.word.id)
+            try known.persist()
+
+            if phase == .selecting {
+                refillFreshIfNeeded()
+
+                // Если новых слов больше нет и набрать цель нельзя — корректируем goal по факту
+                if remainingNewWords.isEmpty,
+                   queue.allSatisfy({ $0.state == .learning }),
+                   learningCount < goal {
+                    goal = learningCount
+                }
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    /// "Начать учить" — переводим слово в learning и дальше оно участвует в круге
+    /// Как только learningCount достигнет goal → переходим в фазу practising (никаких новых слов).
+    func startLearning() {
         guard !queue.isEmpty else { return }
 
-        // Берём текущее слово и переносим ближе к концу,
-        // чтобы оно вернулось позже, но не строго "через одинаковый интервал".
-        let word = queue.removeFirst()
+        let id = queue[0].word.id
+        queue[0].state = .learning
+        learningWordIds.insert(id)
+
+        showLater()
+
+        if phase == .selecting, learningCount >= goal {
+            enterPracticePhase()
+        }
+    }
+
+    // MARK: - Actions (Learning)
+    /// "Показать ещё" — перемещаем ближе к концу
+    func showLater() {
+        guard !queue.isEmpty else { return }
+
+        let item = queue.removeFirst()
         if queue.isEmpty {
-            queue.append(word)
+            queue.append(item)
             return
         }
 
         let n = queue.count
-        let window = min(nearEndShuffleWindow, n) // диапазон размеров
+        let window = min(nearEndShuffleWindow, n)
         let startIndex = max(0, n - window)
         let insertIndex = Int.random(in: startIndex...n) // n == append
-        queue.insert(word, at: insertIndex)
+        queue.insert(item, at: insertIndex)
     }
 
-    /// Пользователь: "Запомнил"
-    func markKnown() {
-        guard let word = queue.first else { return }
+    /// "Запомнил(а)" — добавляем в SRS и убираем из круга.
+    /// В фазе practicing — новых слов не добавляем вообще.
+    func markMastered() {
+        guard let item = queue.first else { return }
 
         do {
-            // 1) Убираем из очереди (без индексов — безопасно)
             _ = queue.removeFirst()
 
-            // 2) Добавляем в SRS и сохраняем
-            srs.addNewWordToSRS(wordId: word.id, firstReviewTomorrow: firstReviewTomorrow)
+            srs.addNewWordToSRS(wordId: item.word.id, firstReviewTomorrow: firstReviewTomorrow)
             try srs.persist()
 
-            // 3) Прогресс
             masteredCount += 1
+            learningWordIds.remove(item.word.id)
 
-            // Если вдруг слово было последним — queue станет пустой, это ок.
+            if masteredCount >= goal {
+                queue = []
+                remainingNewWords = []
+                return
+            }
+
+            // Если ещё выбираем learning-слова и их пока меньше цели — можно добрать свежие
+            if phase == .selecting {
+                if learningCount < goal {
+                    refillFreshIfNeeded()
+
+                    // Если добрать невозможно — корректируем goal
+                    if remainingNewWords.isEmpty,
+                       queue.allSatisfy({ $0.state == .learning }),
+                       learningCount < goal {
+                        goal = learningCount
+                    }
+                } else {
+                    enterPracticePhase()
+                }
+            } else {
+                // practicing: ничего не добавляем, просто продолжаем круг по оставшимся learning
+                if queue.isEmpty {
+                    // теоретически может случиться, если learningCount < goal (не хватило слов)
+                    goal = masteredCount
+                }
+            }
+
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
+    // MARK: - Backward compatible (старые имена)
+    func markNotYet() { showLater() }
+    func markKnown() { markMastered() }
+
     // MARK: - Private helpers
-    private func srsAllWordIds() -> [String] {
-        // Нет публичного доступа к cached — но нам нужен список IDs.
-        // Самый простой MVP-хак: получить из store напрямую.
-        // Чтобы не плодить новый store, используем текущий store через load() уже сделан,
-        // а вот список IDs можно достать через dueItems + “не due”.
-        // Поэтому в MVP проще: загрузить из store ещё раз тут — но мы не хотим.
-        //
-        // Лучшее MVP-решение: добавить метод в SRSService: allWordIds().
-        // Сделаем это ниже.
-        return srs.allWordIds()
+
+    /// Добавляем свежие слова только на этапе выбора и только пока learningCount < goal.
+    private func refillFreshIfNeeded() {
+        guard phase == .selecting else { return }
+        guard learningCount < goal else {
+            enterPracticePhase()
+            return
+        }
+
+        while queue.count < targetQueueSize,
+              !remainingNewWords.isEmpty,
+              learningCount < goal {
+            let next = remainingNewWords.removeFirst()
+            queue.append(SessionWord(word: next, state: .fresh))
+        }
+
+        if queue.isEmpty, let _ = remainingNewWords.first, learningCount < goal {
+            let next = remainingNewWords.removeFirst()
+            queue.append(SessionWord(word: next, state: .fresh))
+        }
+    }
+
+    /// Переход в режим "крутим только выбранные learning-слова"
+    private func enterPracticePhase() {
+        phase = .practicing
+
+        // Убираем все свежие слова (по ним уже не принимаем решение)
+        queue.removeAll { $0.state == .fresh }
+
+        // Перемешаем, чтобы не было ощущения "всегда одно и то же"
+        queue.shuffle()
     }
 }

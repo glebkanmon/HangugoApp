@@ -30,27 +30,87 @@ struct ReviewView: View {
                 }
             } else if let word = vm.currentWord {
                 Section("Card") {
-                    Text(word.korean)
-                        .font(.headline)
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(word.korean)
+                            .font(.system(size: 34, weight: .semibold))
 
-                    if isAnswerRevealed {
-                        Text(word.translation)
-                            .foregroundStyle(.secondary)
+                        revealableAnswerBlock(
+                            isRevealed: isAnswerRevealed,
+                            hint: "Tap to reveal translation and image",
+                            hasImage: word.imageAssetName != nil
+                        ) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text(word.translation)
+                                    .foregroundStyle(.secondary)
 
-                        if let example = word.example, !example.isEmpty {
-                            Text(example)
+                                if let imageName = word.imageAssetName {
+                                    Image(imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(maxWidth: .infinity)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        } onReveal: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                isAnswerRevealed = true
+                            }
                         }
-                    } else {
-                        Button("Reveal translation") {
-                            isAnswerRevealed = true
+                    }
+                    .padding(.vertical, 2)
+                }
+
+                if let example = word.example, !example.isEmpty {
+                    Section("Example") {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(example)
+
+                            if let exTr = word.exampleTranslation, !exTr.isEmpty {
+                                Text(exTr)
+                                    .foregroundStyle(.secondary)
+                                    .blur(radius: isAnswerRevealed ? 0 : 12)
+                                    .redacted(reason: isAnswerRevealed ? [] : .placeholder)
+                                    .opacity(isAnswerRevealed ? 1 : 0.95)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        if !isAnswerRevealed {
+                                            withAnimation(.easeInOut(duration: 0.2)) {
+                                                isAnswerRevealed = true
+                                            }
+                                        }
+                                    }
+                            }
                         }
                     }
                 }
 
                 Section("Rating") {
-                    Button("Hard") { rateAndAdvance(.hard) }.disabled(!isAnswerRevealed)
-                    Button("Normal") { rateAndAdvance(.normal) }.disabled(!isAnswerRevealed)
-                    Button("Easy") { rateAndAdvance(.easy) }.disabled(!isAnswerRevealed)
+                    Button {
+                        rateAndAdvance(.hard)
+                    } label: {
+                        Label("Hard", systemImage: "tortoise")
+                            .fontWeight(.semibold)
+                    }
+                    .disabled(!isAnswerRevealed)
+
+                    Button {
+                        rateAndAdvance(.normal)
+                    } label: {
+                        Label("Normal", systemImage: "figure.walk")
+                            .fontWeight(.semibold)
+                    }
+                    .disabled(!isAnswerRevealed)
+
+                    Button {
+                        rateAndAdvance(.easy)
+                    } label: {
+                        Label("Easy", systemImage: "hare")
+                            .fontWeight(.semibold)
+                    }
+                    .disabled(!isAnswerRevealed)
                 }
             } else {
                 Section {
@@ -58,6 +118,10 @@ struct ReviewView: View {
                         .foregroundStyle(.secondary)
                 }
             }
+        }
+        .id(vm.currentWord?.id ?? "no_word")
+        .onChange(of: vm.currentWord?.id) { _ in
+            isAnswerRevealed = false
         }
         .navigationTitle("Review")
         .onAppear {
@@ -69,6 +133,42 @@ struct ReviewView: View {
     private func rateAndAdvance(_ rating: ReviewRating) {
         vm.rateCurrent(rating)
         isAnswerRevealed = false
+    }
+
+    @ViewBuilder
+    private func revealableAnswerBlock<Content: View>(
+        isRevealed: Bool,
+        hint: String,
+        hasImage: Bool,
+        @ViewBuilder content: () -> Content,
+        onReveal: @escaping () -> Void
+    ) -> some View {
+        ZStack {
+            content()
+                .blur(radius: isRevealed ? 0 : 12)
+                .redacted(reason: isRevealed ? [] : .placeholder)
+                .opacity(isRevealed ? 1 : 0.95)
+
+            HStack(spacing: 8) {
+                Image(systemName: "hand.tap")
+                    .foregroundStyle(.secondary)
+                Text(hasImage ? hint : "Tap to reveal translation")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.vertical, 10)
+            .frame(maxWidth: .infinity)
+            .opacity(isRevealed ? 0 : 1)
+            .allowsHitTesting(false)
+            .accessibilityHidden(isRevealed)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if !isRevealed {
+                onReveal()
+            }
+        }
+        .accessibilityAddTraits(.isButton)
     }
 }
 

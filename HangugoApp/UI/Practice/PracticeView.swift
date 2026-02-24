@@ -107,7 +107,7 @@ struct PracticeView: View {
 
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text("Текст изменён")
-                                    Text("Результат ниже относится к предыдущей версии. Нажми «Проверить снова» (\(vm.lastModeLabel == "Deep" ? "Глубже" : "Проверить")).")
+                                    Text("Результат ниже относится к предыдущей версии. Нажми «Проверить снова» (\(vm.lastModeLabel)).")
                                         .font(.footnote)
                                         .foregroundStyle(.secondary)
                                 }

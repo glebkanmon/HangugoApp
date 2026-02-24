@@ -25,5 +25,5 @@ struct WordRow: View {
     }
 }
 #Preview {
-    WordRow(word: Word(id: "test", korean: "글렙", translation: "Глеб", example: nil, imageAssetName: nil, audioKey: nil, tags: nil))
+    WordRow(word: Word(id: "test", korean: "글렙", translation: "Глеб", example: nil, exampleTranslation: nil, imageAssetName: nil, audioKey: nil, tags: nil))
 }

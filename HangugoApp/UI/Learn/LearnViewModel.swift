@@ -10,6 +10,7 @@ final class LearnViewModel: ObservableObject {
     @Published private(set) var dueToday: Int = 0
 
     private let srs = SRSService(store: FileSRSStore())
+    private let known = KnownWordsService(store: FileKnownWordsStore())
 
     func load() {
         do {
@@ -18,12 +19,16 @@ final class LearnViewModel: ObservableObject {
 
             // 2) SRS
             try srs.load()
-
-            // 3) X: слова, которых нет в SRS
             let srsIds = Set(srs.allWordIds())
-            newWordsAvailable = words.filter { !srsIds.contains($0.id) }.count
 
-            // 4) Y: due сегодня
+            // 3) Known (уже знаю — не добавляем в SRS, но исключаем из "новых")
+            try known.load()
+            let knownIds = Set(known.allWordIds())
+
+            // 4) X: новые (не в SRS и не в Known)
+            newWordsAvailable = words.filter { !srsIds.contains($0.id) && !knownIds.contains($0.id) }.count
+
+            // 5) Y: due сегодня
             dueToday = srs.dueItems().count
 
             errorMessage = nil
