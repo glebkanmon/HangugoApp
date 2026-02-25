@@ -2,34 +2,32 @@ import Foundation
 
 final class FileSRSStore: SRSStore {
 
-    private let fileName = "srs_items.json"
+    private static let filename = "srs_items.json"
+    private static let schemaVersion = 1
+
+    private let store: FileStore
+
+    init() {
+        // Фоллбек без крэша: если директория не создалась — используем Documents напрямую.
+        // В реальности ошибка крайне редкая, но так VM/Service не упадут на init.
+        self.store = (try? FileStore()) ?? (try! FileStore(baseDirectory: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!))
+    }
+
+    // MARK: - SRSStore
 
     func load() throws -> [SRSItem] {
-        let url = try fileURL()
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            return [] // первый запуск — ничего нет
-        }
+        guard store.exists(Self.filename) else { return [] }
 
-        let data = try Data(contentsOf: url)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return try decoder.decode([SRSItem].self, from: data)
+        let env = try store.readEnvelopeOrLegacy(
+            filename: Self.filename,
+            schemaVersion: Self.schemaVersion,
+            legacyType: [SRSItem].self
+        )
+        return env.payload
     }
 
     func save(_ items: [SRSItem]) throws {
-        let url = try fileURL()
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        encoder.dateEncodingStrategy = .iso8601
-
-        let data = try encoder.encode(items)
-        try data.write(to: url, options: [.atomic])
-    }
-
-    private func fileURL() throws -> URL {
-        guard let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw NSError(domain: "FileSRSStore", code: 1, userInfo: [NSLocalizedDescriptionKey: "Documents directory not found"])
-        }
-        return docs.appendingPathComponent(fileName)
+        let env = FileStore.Envelope(schemaVersion: Self.schemaVersion, payload: items)
+        try store.writeJSONAtomic(env, to: Self.filename)
     }
 }

@@ -1,38 +1,33 @@
-// Data/FileSelectedTagsStore.swift
-
 import Foundation
 
 final class FileSelectedTagsStore: SelectedTagsStore {
 
-    private let fileName = "selected_tags.json"
+    private static let filename = "selected_tags.json"
+    private static let schemaVersion = 1
+
+    private let store: FileStore
+
+    init() {
+        self.store = (try? FileStore()) ?? (try! FileStore(baseDirectory: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!))
+    }
+
+    // MARK: - SelectedTagsStore
 
     func load() throws -> Set<String> {
-        let url = try fileURL()
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            return []
-        }
-        let data = try Data(contentsOf: url)
-        let decoder = JSONDecoder()
-        let tags = try decoder.decode([String].self, from: data)
-        return Set(tags)
+        guard store.exists(Self.filename) else { return [] }
+
+        // legacy: [String]
+        let env = try store.readEnvelopeOrLegacy(
+            filename: Self.filename,
+            schemaVersion: Self.schemaVersion,
+            legacyType: [String].self
+        )
+        return Set(env.payload)
     }
 
     func save(_ tags: Set<String>) throws {
-        let url = try fileURL()
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        let data = try encoder.encode(Array(tags).sorted())
-        try data.write(to: url, options: [.atomic])
-    }
-
-    private func fileURL() throws -> URL {
-        guard let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw NSError(
-                domain: "FileSelectedTagsStore",
-                code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Documents directory not found"]
-            )
-        }
-        return docs.appendingPathComponent(fileName)
+        let payload = Array(tags).sorted()
+        let env = FileStore.Envelope(schemaVersion: Self.schemaVersion, payload: payload)
+        try store.writeJSONAtomic(env, to: Self.filename)
     }
 }

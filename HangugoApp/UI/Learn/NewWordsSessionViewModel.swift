@@ -33,7 +33,7 @@ final class NewWordsSessionViewModel: ObservableObject {
     @Published private(set) var masteredCount: Int = 0
     @Published var errorMessage: String?
 
-    // MARK: - Dependencies
+    // MARK: - Dependencies (DI only)
     private let srs: SRSService
     private let known: KnownWordsService
 
@@ -51,16 +51,15 @@ final class NewWordsSessionViewModel: ObservableObject {
     /// Набор слов, для которых нажали "Начать учить"
     private var learningWordIds: Set<String> = []
 
+    // ✅ DI: сервисы обязательны, никаких FileStore внутри VM
     init(
-        srs: SRSService = SRSService(store: FileSRSStore()),
-        known: KnownWordsService = KnownWordsService(store: FileKnownWordsStore()),
-        nearEndShuffleWindow: Int = 3,
-        firstReviewTomorrow: Bool = true
+        srs: SRSService,
+        known: KnownWordsService,
+        nearEndShuffleWindow: Int = 3
     ) {
         self.srs = srs
         self.known = known
         self.nearEndShuffleWindow = max(1, nearEndShuffleWindow)
-        self.firstReviewTomorrow = firstReviewTomorrow
     }
 
     // MARK: - Computed

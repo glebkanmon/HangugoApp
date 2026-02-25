@@ -18,7 +18,8 @@ final class PracticeViewModel: ObservableObject {
     private var lastCheckedText: String?
     private var lastIncludeStage2: Bool = false
 
-    init(provider: LLMProvider = DeepSeekProviderDirect(apiKey: Secrets.deepSeekApiKey)) {
+    // ✅ DI: provider обязателен
+    init(provider: LLMProvider) {
         self.provider = provider
 
         // Отслеживаем изменения input -> помечаем результат как “устаревший”
