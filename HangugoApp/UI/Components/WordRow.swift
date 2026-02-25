@@ -1,29 +1,37 @@
+// UI/Components/WordRow.swift
+
 import SwiftUI
 
 struct WordRow: View {
     let word: Word
 
     var body: some View {
-        HStack(spacing: 12) {
-            if let imageName = word.imageAssetName {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 36, height: 36)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-            }
-
-            VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(word.korean)
-                    .font(.headline)
+                    .foregroundStyle(.primary)
 
-                Text(word.translation)
-                    .foregroundStyle(.secondary)
+                Spacer(minLength: 8)
+
+                if let rr = normalizedRR {
+                    Text(rr)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                }
             }
+
+            Text(word.translation)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
         }
         .padding(.vertical, 2)
     }
-}
-#Preview {
-    WordRow(word: Word(id: "test", korean: "글렙", translation: "Глеб", example: nil, exampleTranslation: nil, imageAssetName: nil, audioKey: nil, tags: nil))
+
+    private var normalizedRR: String? {
+        guard let rr = word.transcriptionRR?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !rr.isEmpty else { return nil }
+        return rr
+    }
 }

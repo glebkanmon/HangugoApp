@@ -2,6 +2,7 @@
   {
     "id": "v_hada_001",
     "korean": "하다",
+    "transcription_rr": "hada",
     "translation": "делать",
     "example": "저는 매일 운동을 해요.",
     "exampleTranslation": "Я каждый день делаю зарядку.",
@@ -12,6 +13,7 @@
   {
     "id": "v_gada_001",
     "korean": "가다",
+    "transcription_rr": "gada",
     "translation": "идти / ехать",
     "example": "저는 학교에 가요.",
     "exampleTranslation": "Я иду в школу.",
@@ -22,6 +24,7 @@
   {
     "id": "v_oda_001",
     "korean": "오다",
+    "transcription_rr": "oda",
     "translation": "приходить / приезжать",
     "example": "친구가 집에 와요.",
     "exampleTranslation": "Друг приходит ко мне домой.",
@@ -32,6 +35,7 @@
   {
     "id": "v_boda_001",
     "korean": "보다",
+    "transcription_rr": "boda",
     "translation": "видеть / смотреть",
     "example": "저는 영화를 봐요.",
     "exampleTranslation": "Я смотрю фильм.",
@@ -42,6 +46,7 @@
   {
     "id": "v_meokda_001",
     "korean": "먹다",
+    "transcription_rr": "meokda",
     "translation": "есть",
     "example": "저는 밥을 먹어요.",
     "exampleTranslation": "Я ем рис.",
@@ -52,6 +57,7 @@
   {
     "id": "v_masida_001",
     "korean": "마시다",
+    "transcription_rr": "masida",
     "translation": "пить",
     "example": "물을 마셔요.",
     "exampleTranslation": "Я пью воду.",
@@ -62,6 +68,7 @@
   {
     "id": "v_jada_001",
     "korean": "자다",
+    "transcription_rr": "jada",
     "translation": "спать",
     "example": "저는 10시에 자요.",
     "exampleTranslation": "Я ложусь спать в 10 часов.",
@@ -72,6 +79,7 @@
   {
     "id": "v_ireonada_001",
     "korean": "일어나다",
+    "transcription_rr": "ireonada",
     "translation": "вставать / просыпаться",
     "example": "저는 7시에 일어나요.",
     "exampleTranslation": "Я встаю в 7 часов.",
@@ -82,6 +90,7 @@
   {
     "id": "v_sida_001",
     "korean": "쉬다",
+    "transcription_rr": "swida",
     "translation": "отдыхать",
     "example": "주말에 쉬어요.",
     "exampleTranslation": "В выходные я отдыхаю.",
@@ -92,6 +101,7 @@
   {
     "id": "v_mannada_001",
     "korean": "만나다",
+    "transcription_rr": "mannada",
     "translation": "встречать(ся)",
     "example": "친구를 만나요.",
     "exampleTranslation": "Я встречаюсь с другом.",
@@ -102,6 +112,7 @@
   {
     "id": "v_sseuda_001",
     "korean": "쓰다",
+    "transcription_rr": "sseuda",
     "translation": "писать",
     "example": "저는 매일 일기를 써요.",
     "exampleTranslation": "Я каждый день пишу дневник.",
@@ -112,6 +123,7 @@
   {
     "id": "v_ilgeoda_001",
     "korean": "읽다",
+    "transcription_rr": "ikda",
     "translation": "читать",
     "example": "책을 읽어요.",
     "exampleTranslation": "Я читаю книгу.",
@@ -122,6 +134,7 @@
   {
     "id": "v_deutda_001",
     "korean": "듣다",
+    "transcription_rr": "deutda",
     "translation": "слушать / слышать",
     "example": "음악을 들어요.",
     "exampleTranslation": "Я слушаю музыку.",
@@ -132,6 +145,7 @@
   {
     "id": "v_malda_001",
     "korean": "말하다",
+    "transcription_rr": "malhada",
     "translation": "говорить",
     "example": "천천히 말해 주세요.",
     "exampleTranslation": "Пожалуйста, говорите медленно.",
@@ -142,6 +156,7 @@
   {
     "id": "v_juda_001",
     "korean": "주다",
+    "transcription_rr": "juda",
     "translation": "давать",
     "example": "이것을 주세요.",
     "exampleTranslation": "Дайте, пожалуйста, это.",
@@ -152,6 +167,7 @@
   {
     "id": "v_batda_001",
     "korean": "받다",
+    "transcription_rr": "batda",
     "translation": "получать",
     "example": "선물을 받았어요.",
     "exampleTranslation": "Я получил(а) подарок.",
@@ -162,6 +178,7 @@
   {
     "id": "v_salda_001",
     "korean": "살다",
+    "transcription_rr": "salda",
     "translation": "жить",
     "example": "저는 서울에 살아요.",
     "exampleTranslation": "Я живу в Сеуле.",
@@ -172,6 +189,7 @@
   {
     "id": "v_salda_buy_001",
     "korean": "사다",
+    "transcription_rr": "sada",
     "translation": "покупать",
     "example": "빵을 사요.",
     "exampleTranslation": "Я покупаю хлеб.",
@@ -182,6 +200,7 @@
   {
     "id": "v_keitda_001",
     "korean": "걷다",
+    "transcription_rr": "geotda",
     "translation": "ходить пешком",
     "example": "공원에서 걸어요.",
     "exampleTranslation": "Я гуляю в парке.",
@@ -192,6 +211,7 @@
   {
     "id": "v_tada_001",
     "korean": "타다",
+    "transcription_rr": "tada",
     "translation": "садиться / ехать на (транспорте)",
     "example": "버스를 타요.",
     "exampleTranslation": "Я еду на автобусе.",
@@ -202,6 +222,7 @@
   {
     "id": "v_irhada_001",
     "korean": "일하다",
+    "transcription_rr": "ilhada",
     "translation": "работать",
     "example": "저는 회사에서 일해요.",
     "exampleTranslation": "Я работаю в компании.",
@@ -212,6 +233,7 @@
   {
     "id": "v_gongbuhada_001",
     "korean": "공부하다",
+    "transcription_rr": "gongbuhada",
     "translation": "учиться",
     "example": "한국어를 공부해요.",
     "exampleTranslation": "Я учу корейский язык.",
@@ -222,6 +244,7 @@
   {
     "id": "v_jogihada_001",
     "korean": "요리하다",
+    "transcription_rr": "yorihada",
     "translation": "готовить",
     "example": "집에서 요리해요.",
     "exampleTranslation": "Я готовлю дома.",
@@ -232,6 +255,7 @@
   {
     "id": "v_swimda_001",
     "korean": "수영하다",
+    "transcription_rr": "suyeonghada",
     "translation": "плавать (заниматься плаванием)",
     "example": "저는 수영을 해요.",
     "exampleTranslation": "Я занимаюсь плаванием.",
@@ -242,6 +266,7 @@
   {
     "id": "v_kyeoljedahda_001",
     "korean": "결제하다",
+    "transcription_rr": "gyeoljéhada",
     "translation": "оплачивать",
     "example": "카드로 결제해요.",
     "exampleTranslation": "Я оплачиваю картой.",
@@ -249,10 +274,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:shopping", "topic:money", "list:top500"]
   },
-
   {
     "id": "n_bap_001",
     "korean": "밥",
+    "transcription_rr": "bap",
     "translation": "рис / еда",
     "example": "밥을 먹어요.",
     "exampleTranslation": "Я ем рис.",
@@ -263,6 +288,7 @@
   {
     "id": "n_hakgyo_001",
     "korean": "학교",
+    "transcription_rr": "hakgyo",
     "translation": "школа",
     "example": "학교에 가요.",
     "exampleTranslation": "Я иду в школу.",
@@ -273,6 +299,7 @@
   {
     "id": "n_jip_001",
     "korean": "집",
+    "transcription_rr": "jip",
     "translation": "дом",
     "example": "집에 있어요.",
     "exampleTranslation": "Я дома.",
@@ -283,6 +310,7 @@
   {
     "id": "n_saram_001",
     "korean": "사람",
+    "transcription_rr": "saram",
     "translation": "человек",
     "example": "사람이 많아요.",
     "exampleTranslation": "Людей много.",
@@ -293,6 +321,7 @@
   {
     "id": "n_chingu_001",
     "korean": "친구",
+    "transcription_rr": "chingu",
     "translation": "друг",
     "example": "친구를 만나요.",
     "exampleTranslation": "Я встречаюсь с другом.",
@@ -303,6 +332,7 @@
   {
     "id": "n_oneul_001",
     "korean": "오늘",
+    "transcription_rr": "oneul",
     "translation": "сегодня",
     "example": "오늘 바빠요.",
     "exampleTranslation": "Сегодня я занят(а).",
@@ -313,6 +343,7 @@
   {
     "id": "n_nae_il_001",
     "korean": "내일",
+    "transcription_rr": "naeil",
     "translation": "завтра",
     "example": "내일 만나요.",
     "exampleTranslation": "Встретимся завтра.",
@@ -323,6 +354,7 @@
   {
     "id": "n_eoje_001",
     "korean": "어제",
+    "transcription_rr": "eoje",
     "translation": "вчера",
     "example": "어제 비가 왔어요.",
     "exampleTranslation": "Вчера шёл дождь.",
@@ -333,6 +365,7 @@
   {
     "id": "n_mul_001",
     "korean": "물",
+    "transcription_rr": "mul",
     "translation": "вода",
     "example": "물을 마셔요.",
     "exampleTranslation": "Я пью воду.",
@@ -343,6 +376,7 @@
   {
     "id": "n_kopi_001",
     "korean": "커피",
+    "transcription_rr": "keopi",
     "translation": "кофе",
     "example": "커피 한 잔 주세요.",
     "exampleTranslation": "Один кофе, пожалуйста.",
@@ -353,6 +387,7 @@
   {
     "id": "n_cha_001",
     "korean": "차",
+    "transcription_rr": "cha",
     "translation": "чай / машина",
     "example": "차를 마셔요.",
     "exampleTranslation": "Я пью чай.",
@@ -363,6 +398,7 @@
   {
     "id": "n_ppang_001",
     "korean": "빵",
+    "transcription_rr": "ppang",
     "translation": "хлеб",
     "example": "빵을 사요.",
     "exampleTranslation": "Я покупаю хлеб.",
@@ -373,6 +409,7 @@
   {
     "id": "n_gogi_001",
     "korean": "고기",
+    "transcription_rr": "gogi",
     "translation": "мясо",
     "example": "고기를 먹어요.",
     "exampleTranslation": "Я ем мясо.",
@@ -383,6 +420,7 @@
   {
     "id": "n_chaeso_001",
     "korean": "채소",
+    "transcription_rr": "chaeso",
     "translation": "овощи",
     "example": "채소를 좋아해요.",
     "exampleTranslation": "Я люблю овощи.",
@@ -393,6 +431,7 @@
   {
     "id": "n_gwail_001",
     "korean": "과일",
+    "transcription_rr": "gwail",
     "translation": "фрукты",
     "example": "과일을 먹어요.",
     "exampleTranslation": "Я ем фрукты.",
@@ -403,6 +442,7 @@
   {
     "id": "n_jus_001",
     "korean": "주스",
+    "transcription_rr": "juseu",
     "translation": "сок",
     "example": "주스를 마셔요.",
     "exampleTranslation": "Я пью сок.",
@@ -413,6 +453,7 @@
   {
     "id": "n_yeonghwa_001",
     "korean": "영화",
+    "transcription_rr": "yeonghwa",
     "translation": "фильм",
     "example": "영화를 봐요.",
     "exampleTranslation": "Я смотрю фильм.",
@@ -423,6 +464,7 @@
   {
     "id": "n_eumak_001",
     "korean": "음악",
+    "transcription_rr": "eumak",
     "translation": "музыка",
     "example": "음악을 들어요.",
     "exampleTranslation": "Я слушаю музыку.",
@@ -433,6 +475,7 @@
   {
     "id": "n_sigan_001",
     "korean": "시간",
+    "transcription_rr": "sigan",
     "translation": "время",
     "example": "시간이 있어요?",
     "exampleTranslation": "У тебя есть время?",
@@ -443,6 +486,7 @@
   {
     "id": "n_oneul_bam_001",
     "korean": "오늘 밤",
+    "transcription_rr": "oneul bam",
     "translation": "сегодня вечером / ночью",
     "example": "오늘 밤에 뭐 해요?",
     "exampleTranslation": "Что делаешь сегодня вечером?",
@@ -453,6 +497,7 @@
   {
     "id": "n_achim_001",
     "korean": "아침",
+    "transcription_rr": "achim",
     "translation": "утро / завтрак",
     "example": "아침에 커피를 마셔요.",
     "exampleTranslation": "Утром я пью кофе.",
@@ -463,6 +508,7 @@
   {
     "id": "n_jeomsim_001",
     "korean": "점심",
+    "transcription_rr": "jeomsim",
     "translation": "обед",
     "example": "점심을 먹어요.",
     "exampleTranslation": "Я ем обед.",
@@ -473,6 +519,7 @@
   {
     "id": "n_jeonyeok_001",
     "korean": "저녁",
+    "transcription_rr": "jeonyeok",
     "translation": "вечер / ужин",
     "example": "저녁에 집에 와요.",
     "exampleTranslation": "Вечером я прихожу домой.",
@@ -483,6 +530,7 @@
   {
     "id": "n_bam_001",
     "korean": "밤",
+    "transcription_rr": "bam",
     "translation": "ночь",
     "example": "밤에 자요.",
     "exampleTranslation": "Ночью я сплю.",
@@ -493,6 +541,7 @@
   {
     "id": "n_bun_001",
     "korean": "분",
+    "transcription_rr": "bun",
     "translation": "минута (счётное слово)",
     "example": "5분만 기다려 주세요.",
     "exampleTranslation": "Подождите всего 5 минут.",
@@ -503,6 +552,7 @@
   {
     "id": "n_sigan_si_001",
     "korean": "시",
+    "transcription_rr": "si",
     "translation": "час (счёт времени)",
     "example": "지금 몇 시예요?",
     "exampleTranslation": "Сколько сейчас времени?",
@@ -513,6 +563,7 @@
   {
     "id": "n_gae_001",
     "korean": "개",
+    "transcription_rr": "gae",
     "translation": "штука (счётное слово)",
     "example": "사과 두 개 주세요.",
     "exampleTranslation": "Дайте два яблока, пожалуйста.",
@@ -523,6 +574,7 @@
   {
     "id": "n_myeong_001",
     "korean": "명",
+    "transcription_rr": "myeong",
     "translation": "человек (счётное слово)",
     "example": "세 명이 있어요.",
     "exampleTranslation": "Есть три человека.",
@@ -533,6 +585,7 @@
   {
     "id": "n_won_001",
     "korean": "원",
+    "transcription_rr": "won",
     "translation": "вона (валюта)",
     "example": "이거 얼마예요? 5천 원이에요.",
     "exampleTranslation": "Сколько это стоит? 5000 вон.",
@@ -543,6 +596,7 @@
   {
     "id": "n_don_001",
     "korean": "돈",
+    "transcription_rr": "don",
     "translation": "деньги",
     "example": "돈이 있어요.",
     "exampleTranslation": "У меня есть деньги.",
@@ -553,6 +607,7 @@
   {
     "id": "n_gage_001",
     "korean": "가게",
+    "transcription_rr": "gage",
     "translation": "магазин",
     "example": "가게에 가요.",
     "exampleTranslation": "Я иду в магазин.",
@@ -563,6 +618,7 @@
   {
     "id": "n_sijang_001",
     "korean": "시장",
+    "transcription_rr": "sijang",
     "translation": "рынок",
     "example": "시장에서 과일을 사요.",
     "exampleTranslation": "Я покупаю фрукты на рынке.",
@@ -573,6 +629,7 @@
   {
     "id": "n_hoesa_001",
     "korean": "회사",
+    "transcription_rr": "hoesa",
     "translation": "компания",
     "example": "회사에 가요.",
     "exampleTranslation": "Я иду в компанию (на работу).",
@@ -583,6 +640,7 @@
   {
     "id": "n_hagwon_001",
     "korean": "학원",
+    "transcription_rr": "hagwon",
     "translation": "учебный центр",
     "example": "학원에서 한국어를 배워요.",
     "exampleTranslation": "Я учу корейский в учебном центре.",
@@ -593,6 +651,7 @@
   {
     "id": "n_haksaeng_001",
     "korean": "학생",
+    "transcription_rr": "haksaeng",
     "translation": "студент / ученик",
     "example": "저는 학생이에요.",
     "exampleTranslation": "Я студент(ка).",
@@ -603,6 +662,7 @@
   {
     "id": "n_seonsaengnim_001",
     "korean": "선생님",
+    "transcription_rr": "seonsaengnim",
     "translation": "учитель",
     "example": "선생님, 질문이 있어요.",
     "exampleTranslation": "Учитель, у меня есть вопрос.",
@@ -613,6 +673,7 @@
   {
     "id": "n_saeob_001",
     "korean": "수업",
+    "transcription_rr": "sueop",
     "translation": "урок / занятие",
     "example": "수업이 있어요.",
     "exampleTranslation": "У меня есть занятие.",
@@ -623,6 +684,7 @@
   {
     "id": "n_gajok_001",
     "korean": "가족",
+    "transcription_rr": "gajok",
     "translation": "семья",
     "example": "가족이 있어요.",
     "exampleTranslation": "У меня есть семья.",
@@ -633,6 +695,7 @@
   {
     "id": "n_eomma_001",
     "korean": "엄마",
+    "transcription_rr": "eomma",
     "translation": "мама",
     "example": "엄마가 집에 있어요.",
     "exampleTranslation": "Мама дома.",
@@ -643,6 +706,7 @@
   {
     "id": "n_appa_001",
     "korean": "아빠",
+    "transcription_rr": "appa",
     "translation": "папа",
     "example": "아빠는 회사에 가요.",
     "exampleTranslation": "Папа идёт на работу.",
@@ -653,6 +717,7 @@
   {
     "id": "n_eonni_001",
     "korean": "언니",
+    "transcription_rr": "eonni",
     "translation": "старшая сестра (для женщины)",
     "example": "언니가 있어요.",
     "exampleTranslation": "У меня есть старшая сестра.",
@@ -663,6 +728,7 @@
   {
     "id": "n_oppa_001",
     "korean": "오빠",
+    "transcription_rr": "oppa",
     "translation": "старший брат (для женщины)",
     "example": "오빠가 집에 와요.",
     "exampleTranslation": "Старший брат приходит домой.",
@@ -673,6 +739,7 @@
   {
     "id": "n_dongsaeng_001",
     "korean": "동생",
+    "transcription_rr": "dongsaeng",
     "translation": "младший брат/сестра",
     "example": "동생이 학교에 가요.",
     "exampleTranslation": "Младший брат/сестра идёт в школу.",
@@ -683,6 +750,7 @@
   {
     "id": "n_aim_001",
     "korean": "아이",
+    "transcription_rr": "ai",
     "translation": "ребёнок",
     "example": "아이들이 놀아요.",
     "exampleTranslation": "Дети играют.",
@@ -693,6 +761,7 @@
   {
     "id": "n_dongmul_001",
     "korean": "동물",
+    "transcription_rr": "dongmul",
     "translation": "животное",
     "example": "동물을 좋아해요.",
     "exampleTranslation": "Я люблю животных.",
@@ -703,6 +772,7 @@
   {
     "id": "n_gae_ani_001",
     "korean": "개",
+    "transcription_rr": "gae",
     "translation": "собака",
     "example": "개가 귀여워요.",
     "exampleTranslation": "Собака милая.",
@@ -713,6 +783,7 @@
   {
     "id": "n_go_yang_i_001",
     "korean": "고양이",
+    "transcription_rr": "goyangi",
     "translation": "кот",
     "example": "고양이가 있어요.",
     "exampleTranslation": "У меня есть кот.",
@@ -723,6 +794,7 @@
   {
     "id": "n_sa_ja_001",
     "korean": "사자",
+    "transcription_rr": "saja",
     "translation": "лев",
     "example": "사자는 강해요.",
     "exampleTranslation": "Лев сильный.",
@@ -733,6 +805,7 @@
   {
     "id": "n_tokki_001",
     "korean": "토끼",
+    "transcription_rr": "tokki",
     "translation": "кролик",
     "example": "토끼가 빨라요.",
     "exampleTranslation": "Кролик быстрый.",
@@ -743,6 +816,7 @@
   {
     "id": "n_hosu_001",
     "korean": "호수",
+    "transcription_rr": "hosu",
     "translation": "озеро",
     "example": "호수가 예뻐요.",
     "exampleTranslation": "Озеро красивое.",
@@ -753,6 +827,7 @@
   {
     "id": "n_gongwon_001",
     "korean": "공원",
+    "transcription_rr": "gongwon",
     "translation": "парк",
     "example": "공원에 가요.",
     "exampleTranslation": "Я иду в парк.",
@@ -763,6 +838,7 @@
   {
     "id": "n_jihacheol_001",
     "korean": "지하철",
+    "transcription_rr": "jihacheol",
     "translation": "метро",
     "example": "지하철을 타요.",
     "exampleTranslation": "Я еду на метро.",
@@ -773,6 +849,7 @@
   {
     "id": "n_beoseu_001",
     "korean": "버스",
+    "transcription_rr": "beoseu",
     "translation": "автобус",
     "example": "버스를 타요.",
     "exampleTranslation": "Я еду на автобусе.",
@@ -783,6 +860,7 @@
   {
     "id": "n_bijeon_001",
     "korean": "비행기",
+    "transcription_rr": "bihaenggi",
     "translation": "самолёт",
     "example": "비행기를 타요.",
     "exampleTranslation": "Я лечу на самолёте.",
@@ -793,6 +871,7 @@
   {
     "id": "n_hotel_001",
     "korean": "호텔",
+    "transcription_rr": "hotel",
     "translation": "отель",
     "example": "호텔에 묵어요.",
     "exampleTranslation": "Я останавливаюсь в отеле.",
@@ -803,6 +882,7 @@
   {
     "id": "n_gonghang_001",
     "korean": "공항",
+    "transcription_rr": "gonghang",
     "translation": "аэропорт",
     "example": "공항에 가요.",
     "exampleTranslation": "Я еду в аэропорт.",
@@ -813,6 +893,7 @@
   {
     "id": "n_yeok_001",
     "korean": "역",
+    "transcription_rr": "yeok",
     "translation": "станция",
     "example": "역이 어디예요?",
     "exampleTranslation": "Где станция?",
@@ -823,6 +904,7 @@
   {
     "id": "n_gil_001",
     "korean": "길",
+    "transcription_rr": "gil",
     "translation": "дорога / путь",
     "example": "길을 물어봐요.",
     "exampleTranslation": "Я спрашиваю дорогу.",
@@ -833,6 +915,7 @@
   {
     "id": "n_jido_001",
     "korean": "지도",
+    "transcription_rr": "jido",
     "translation": "карта",
     "example": "지도를 봐요.",
     "exampleTranslation": "Я смотрю карту.",
@@ -843,6 +926,7 @@
   {
     "id": "n_nara_001",
     "korean": "나라",
+    "transcription_rr": "nara",
     "translation": "страна",
     "example": "한국은 좋은 나라예요.",
     "exampleTranslation": "Корея — хорошая страна.",
@@ -853,6 +937,7 @@
   {
     "id": "n_dosi_001",
     "korean": "도시",
+    "transcription_rr": "dosi",
     "translation": "город",
     "example": "이 도시는 커요.",
     "exampleTranslation": "Этот город большой.",
@@ -863,6 +948,7 @@
   {
     "id": "n_hakgyo_gyosil_001",
     "korean": "교실",
+    "transcription_rr": "gyosil",
     "translation": "класс (аудитория)",
     "example": "교실에 학생이 있어요.",
     "exampleTranslation": "В классе есть студенты.",
@@ -873,6 +959,7 @@
   {
     "id": "n_damim_001",
     "korean": "단어",
+    "transcription_rr": "daneo",
     "translation": "слово",
     "example": "이 단어를 알아요.",
     "exampleTranslation": "Я знаю это слово.",
@@ -883,6 +970,7 @@
   {
     "id": "n_jilmun_001",
     "korean": "질문",
+    "transcription_rr": "jilmun",
     "translation": "вопрос",
     "example": "질문이 있어요.",
     "exampleTranslation": "У меня есть вопрос.",
@@ -893,6 +981,7 @@
   {
     "id": "n_dap_001",
     "korean": "답",
+    "transcription_rr": "dap",
     "translation": "ответ",
     "example": "답을 말해 주세요.",
     "exampleTranslation": "Скажите ответ, пожалуйста.",
@@ -903,6 +992,7 @@
   {
     "id": "n_bangeop_001",
     "korean": "방법",
+    "transcription_rr": "bangbeop",
     "translation": "способ",
     "example": "좋은 방법이 있어요.",
     "exampleTranslation": "Есть хороший способ.",
@@ -913,6 +1003,7 @@
   {
     "id": "n_il_001",
     "korean": "일",
+    "transcription_rr": "il",
     "translation": "дело / работа",
     "example": "일이 많아요.",
     "exampleTranslation": "Дел много.",
@@ -923,6 +1014,7 @@
   {
     "id": "n_hyu_sig_001",
     "korean": "휴식",
+    "transcription_rr": "hyusik",
     "translation": "отдых (сущ.)",
     "example": "휴식이 필요해요.",
     "exampleTranslation": "Мне нужен отдых.",
@@ -933,6 +1025,7 @@
   {
     "id": "n_hyeonsil_001",
     "korean": "현실",
+    "transcription_rr": "hyeonsil",
     "translation": "реальность",
     "example": "현실은 달라요.",
     "exampleTranslation": "Реальность другая.",
@@ -940,10 +1033,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:description", "list:top500"]
   },
-
   {
     "id": "adj_jota_001",
     "korean": "좋다",
+    "transcription_rr": "jota",
     "translation": "хороший / нравится",
     "example": "이 커피가 좋아요.",
     "exampleTranslation": "Мне нравится этот кофе.",
@@ -954,6 +1047,7 @@
   {
     "id": "adj_nappeuda_001",
     "korean": "나쁘다",
+    "transcription_rr": "nappeuda",
     "translation": "плохой",
     "example": "날씨가 나빠요.",
     "exampleTranslation": "Погода плохая.",
@@ -964,6 +1058,7 @@
   {
     "id": "adj_keuda_001",
     "korean": "크다",
+    "transcription_rr": "keuda",
     "translation": "большой",
     "example": "집이 커요.",
     "exampleTranslation": "Дом большой.",
@@ -974,6 +1069,7 @@
   {
     "id": "adj_jakda_001",
     "korean": "작다",
+    "transcription_rr": "jakda",
     "translation": "маленький",
     "example": "방이 작아요.",
     "exampleTranslation": "Комната маленькая.",
@@ -984,6 +1080,7 @@
   {
     "id": "adj_bissa_001",
     "korean": "비싸다",
+    "transcription_rr": "bissada",
     "translation": "дорогой",
     "example": "이거 비싸요.",
     "exampleTranslation": "Это дорого.",
@@ -994,6 +1091,7 @@
   {
     "id": "adj_ssada_001",
     "korean": "싸다",
+    "transcription_rr": "ssada",
     "translation": "дешёвый",
     "example": "이거 싸요.",
     "exampleTranslation": "Это дёшево.",
@@ -1004,6 +1102,7 @@
   {
     "id": "adj_ppareuda_001",
     "korean": "빠르다",
+    "transcription_rr": "ppareuda",
     "translation": "быстрый",
     "example": "지하철이 빨라요.",
     "exampleTranslation": "Метро быстрое.",
@@ -1014,6 +1113,7 @@
   {
     "id": "adj_neurida_001",
     "korean": "느리다",
+    "transcription_rr": "neurida",
     "translation": "медленный",
     "example": "인터넷이 느려요.",
     "exampleTranslation": "Интернет медленный.",
@@ -1024,6 +1124,7 @@
   {
     "id": "adj_mashitda_001",
     "korean": "맛있다",
+    "transcription_rr": "masitda",
     "translation": "вкусный",
     "example": "이 음식이 맛있어요.",
     "exampleTranslation": "Эта еда вкусная.",
@@ -1034,6 +1135,7 @@
   {
     "id": "adj_mas_eopda_001",
     "korean": "맛없다",
+    "transcription_rr": "mas-eopda",
     "translation": "невкусный",
     "example": "이거 맛없어요.",
     "exampleTranslation": "Это невкусно.",
@@ -1044,6 +1146,7 @@
   {
     "id": "adj_yeoppeuda_001",
     "korean": "예쁘다",
+    "transcription_rr": "yeppeuda",
     "translation": "красивый",
     "example": "이 공원이 예뻐요.",
     "exampleTranslation": "Этот парк красивый.",
@@ -1054,6 +1157,7 @@
   {
     "id": "adj_gwiyeopda_001",
     "korean": "귀엽다",
+    "transcription_rr": "gwiyeopda",
     "translation": "милый",
     "example": "고양이가 귀여워요.",
     "exampleTranslation": "Кот милый.",
@@ -1064,6 +1168,7 @@
   {
     "id": "adj_himdeulda_001",
     "korean": "힘들다",
+    "transcription_rr": "himdeulda",
     "translation": "тяжело",
     "example": "오늘은 힘들어요.",
     "exampleTranslation": "Сегодня тяжело.",
@@ -1074,6 +1179,7 @@
   {
     "id": "adj_swipta_001",
     "korean": "쉽다",
+    "transcription_rr": "swipda",
     "translation": "лёгкий / просто",
     "example": "이 단어는 쉬워요.",
     "exampleTranslation": "Это слово лёгкое.",
@@ -1084,6 +1190,7 @@
   {
     "id": "adj_eoryeopda_001",
     "korean": "어렵다",
+    "transcription_rr": "eoryeopda",
     "translation": "сложный",
     "example": "이 문법은 어려워요.",
     "exampleTranslation": "Эта грамматика сложная.",
@@ -1091,10 +1198,10 @@
     "audioKey": null,
     "tags": ["pos:adjective", "topic:study", "list:top500"]
   },
-
   {
     "id": "greet_annyeong_001",
     "korean": "안녕하세요",
+    "transcription_rr": "annyeonghaseyo",
     "translation": "здравствуйте",
     "example": "안녕하세요! 처음 뵙겠습니다.",
     "exampleTranslation": "Здравствуйте! Рад(а) познакомиться.",
@@ -1105,6 +1212,7 @@
   {
     "id": "greet_gamsahamnida_001",
     "korean": "감사합니다",
+    "transcription_rr": "gamsahamnida",
     "translation": "спасибо",
     "example": "도와주셔서 감사합니다.",
     "exampleTranslation": "Спасибо, что помогли.",
@@ -1115,6 +1223,7 @@
   {
     "id": "greet_mianhamnida_001",
     "korean": "미안합니다",
+    "transcription_rr": "mianhamnida",
     "translation": "извините",
     "example": "미안합니다, 늦었어요.",
     "exampleTranslation": "Извините, я опоздал(а).",
@@ -1125,6 +1234,7 @@
   {
     "id": "greet_juseyo_001",
     "korean": "주세요",
+    "transcription_rr": "juseyo",
     "translation": "пожалуйста, дайте",
     "example": "물 한 잔 주세요.",
     "exampleTranslation": "Дайте стакан воды, пожалуйста.",
@@ -1132,10 +1242,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:greetings", "topic:shopping", "topic:food", "list:top500"]
   },
-
   {
     "id": "weekday_mon_001",
     "korean": "월요일",
+    "transcription_rr": "woryoil",
     "translation": "понедельник",
     "example": "월요일에 일해요.",
     "exampleTranslation": "В понедельник я работаю.",
@@ -1146,6 +1256,7 @@
   {
     "id": "weekday_tue_001",
     "korean": "화요일",
+    "transcription_rr": "hwayoil",
     "translation": "вторник",
     "example": "화요일에 수업이 있어요.",
     "exampleTranslation": "Во вторник у меня урок.",
@@ -1156,6 +1267,7 @@
   {
     "id": "weekday_wed_001",
     "korean": "수요일",
+    "transcription_rr": "suyoil",
     "translation": "среда",
     "example": "수요일에 만나요.",
     "exampleTranslation": "Встретимся в среду.",
@@ -1166,6 +1278,7 @@
   {
     "id": "weekday_thu_001",
     "korean": "목요일",
+    "transcription_rr": "mogyoil",
     "translation": "четверг",
     "example": "목요일은 바빠요.",
     "exampleTranslation": "В четверг я занят(а).",
@@ -1176,6 +1289,7 @@
   {
     "id": "weekday_fri_001",
     "korean": "금요일",
+    "transcription_rr": "geumyoil",
     "translation": "пятница",
     "example": "금요일에 쉬어요.",
     "exampleTranslation": "В пятницу я отдыхаю.",
@@ -1186,6 +1300,7 @@
   {
     "id": "weekday_sat_001",
     "korean": "토요일",
+    "transcription_rr": "toyoil",
     "translation": "суббота",
     "example": "토요일에 공원에 가요.",
     "exampleTranslation": "В субботу я иду в парк.",
@@ -1196,6 +1311,7 @@
   {
     "id": "weekday_sun_001",
     "korean": "일요일",
+    "transcription_rr": "iryoil",
     "translation": "воскресенье",
     "example": "일요일에 가족을 만나요.",
     "exampleTranslation": "В воскресенье встречаюсь с семьёй.",
@@ -1203,10 +1319,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:weekdays", "topic:time", "topic:family", "list:top500"]
   },
-
   {
     "id": "month_jan_001",
     "korean": "일월",
+    "transcription_rr": "irwol",
     "translation": "январь",
     "example": "일월에 한국에 가요.",
     "exampleTranslation": "В январе еду в Корею.",
@@ -1217,6 +1333,7 @@
   {
     "id": "month_feb_001",
     "korean": "이월",
+    "transcription_rr": "iwol",
     "translation": "февраль",
     "example": "이월은 추워요.",
     "exampleTranslation": "В феврале холодно.",
@@ -1227,6 +1344,7 @@
   {
     "id": "month_mar_001",
     "korean": "삼월",
+    "transcription_rr": "samwol",
     "translation": "март",
     "example": "삼월에 학교가 시작해요.",
     "exampleTranslation": "В марте начинается школа.",
@@ -1237,6 +1355,7 @@
   {
     "id": "month_apr_001",
     "korean": "사월",
+    "transcription_rr": "sawol",
     "translation": "апрель",
     "example": "사월에 꽃이 피어요.",
     "exampleTranslation": "В апреле цветут цветы.",
@@ -1247,6 +1366,7 @@
   {
     "id": "month_may_001",
     "korean": "오월",
+    "transcription_rr": "owol",
     "translation": "май",
     "example": "오월은 따뜻해요.",
     "exampleTranslation": "В мае тепло.",
@@ -1257,6 +1377,7 @@
   {
     "id": "month_jun_001",
     "korean": "유월",
+    "transcription_rr": "yuwol",
     "translation": "июнь",
     "example": "유월에 여행을 가요.",
     "exampleTranslation": "В июне еду в путешествие.",
@@ -1267,6 +1388,7 @@
   {
     "id": "month_jul_001",
     "korean": "칠월",
+    "transcription_rr": "chilwol",
     "translation": "июль",
     "example": "칠월은 더워요.",
     "exampleTranslation": "В июле жарко.",
@@ -1277,6 +1399,7 @@
   {
     "id": "month_aug_001",
     "korean": "팔월",
+    "transcription_rr": "parwol",
     "translation": "август",
     "example": "팔월에 바다에 가요.",
     "exampleTranslation": "В августе еду на море.",
@@ -1287,6 +1410,7 @@
   {
     "id": "month_sep_001",
     "korean": "구월",
+    "transcription_rr": "guwol",
     "translation": "сентябрь",
     "example": "구월에 일이 많아요.",
     "exampleTranslation": "В сентябре много работы.",
@@ -1297,6 +1421,7 @@
   {
     "id": "month_oct_001",
     "korean": "시월",
+    "transcription_rr": "siwol",
     "translation": "октябрь",
     "example": "시월은 좋아요.",
     "exampleTranslation": "Октябрь хороший.",
@@ -1307,6 +1432,7 @@
   {
     "id": "month_nov_001",
     "korean": "십일월",
+    "transcription_rr": "sibiwol",
     "translation": "ноябрь",
     "example": "십일월에는 비가 와요.",
     "exampleTranslation": "В ноябре идёт дождь.",
@@ -1317,6 +1443,7 @@
   {
     "id": "month_dec_001",
     "korean": "십이월",
+    "transcription_rr": "sibiwol",
     "translation": "декабрь",
     "example": "십이월에는 눈이 와요.",
     "exampleTranslation": "В декабре идёт снег.",
@@ -1324,10 +1451,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:months", "topic:time", "topic:weather", "list:top500"]
   },
-
   {
     "id": "season_spring_001",
     "korean": "봄",
+    "transcription_rr": "bom",
     "translation": "весна",
     "example": "봄에 꽃이 예뻐요.",
     "exampleTranslation": "Весной цветы красивые.",
@@ -1338,6 +1465,7 @@
   {
     "id": "season_summer_001",
     "korean": "여름",
+    "transcription_rr": "yeoreum",
     "translation": "лето",
     "example": "여름은 더워요.",
     "exampleTranslation": "Летом жарко.",
@@ -1348,6 +1476,7 @@
   {
     "id": "season_autumn_001",
     "korean": "가을",
+    "transcription_rr": "gaeul",
     "translation": "осень",
     "example": "가을은 시원해요.",
     "exampleTranslation": "Осенью прохладно.",
@@ -1358,6 +1487,7 @@
   {
     "id": "season_winter_001",
     "korean": "겨울",
+    "transcription_rr": "gyeoul",
     "translation": "зима",
     "example": "겨울은 추워요.",
     "exampleTranslation": "Зимой холодно.",
@@ -1365,10 +1495,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:seasons", "topic:weather", "topic:time", "list:top500"]
   },
-
   {
     "id": "weather_bi_001",
     "korean": "비",
+    "transcription_rr": "bi",
     "translation": "дождь",
     "example": "비가 와요.",
     "exampleTranslation": "Идёт дождь.",
@@ -1379,6 +1509,7 @@
   {
     "id": "weather_nun_001",
     "korean": "눈",
+    "transcription_rr": "nun",
     "translation": "снег",
     "example": "눈이 와요.",
     "exampleTranslation": "Идёт снег.",
@@ -1389,6 +1520,7 @@
   {
     "id": "weather_bar람_001",
     "korean": "바람",
+    "transcription_rr": "baram",
     "translation": "ветер",
     "example": "바람이 불어요.",
     "exampleTranslation": "Дует ветер.",
@@ -1399,6 +1531,7 @@
   {
     "id": "weather_hae_001",
     "korean": "해",
+    "transcription_rr": "hae",
     "translation": "солнце",
     "example": "해가 떠요.",
     "exampleTranslation": "Солнце встаёт.",
@@ -1406,10 +1539,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:weather", "list:top500"]
   },
-
   {
     "id": "topic_time_jigeum_001",
     "korean": "지금",
+    "transcription_rr": "jigeum",
     "translation": "сейчас",
     "example": "지금 뭐 해요?",
     "exampleTranslation": "Что ты делаешь сейчас?",
@@ -1420,6 +1553,7 @@
   {
     "id": "topic_time_ajeum_001",
     "korean": "아직",
+    "transcription_rr": "ajik",
     "translation": "ещё (пока)",
     "example": "아직 안 먹었어요.",
     "exampleTranslation": "Я ещё не ел(а).",
@@ -1430,6 +1564,7 @@
   {
     "id": "topic_time_ije_001",
     "korean": "이제",
+    "transcription_rr": "ije",
     "translation": "теперь / уже",
     "example": "이제 집에 가요.",
     "exampleTranslation": "Теперь я иду домой.",
@@ -1437,10 +1572,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:time", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_bang_001",
     "korean": "방",
+    "transcription_rr": "bang",
     "translation": "комната",
     "example": "방이 깨끗해요.",
     "exampleTranslation": "Комната чистая.",
@@ -1451,6 +1586,7 @@
   {
     "id": "adj_kkaekkeuthada_001",
     "korean": "깨끗하다",
+    "transcription_rr": "kkaekkeuthada",
     "translation": "чистый",
     "example": "여기가 깨끗해요.",
     "exampleTranslation": "Здесь чисто.",
@@ -1461,6 +1597,7 @@
   {
     "id": "adj_deoreopda_001",
     "korean": "더럽다",
+    "transcription_rr": "deoreopda",
     "translation": "грязный",
     "example": "길이 더러워요.",
     "exampleTranslation": "Улица грязная.",
@@ -1468,10 +1605,10 @@
     "audioKey": null,
     "tags": ["pos:adjective", "topic:city", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_jeonhwa_001",
     "korean": "전화",
+    "transcription_rr": "jeonhwa",
     "translation": "телефон / звонок",
     "example": "전화해 주세요.",
     "exampleTranslation": "Позвоните, пожалуйста.",
@@ -1482,6 +1619,7 @@
   {
     "id": "v_jeonhwahada_001",
     "korean": "전화하다",
+    "transcription_rr": "jeonhwahada",
     "translation": "звонить",
     "example": "나중에 전화할게요.",
     "exampleTranslation": "Я позвоню позже.",
@@ -1489,10 +1627,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:daily", "topic:work", "list:top500"]
   },
-
   {
     "id": "n_hyeonsu_001",
     "korean": "현금",
+    "transcription_rr": "hyeongeum",
     "translation": "наличные",
     "example": "현금 있어요?",
     "exampleTranslation": "Есть наличные?",
@@ -1503,6 +1641,7 @@
   {
     "id": "n_kadeu_001",
     "korean": "카드",
+    "transcription_rr": "kadeu",
     "translation": "карта (банковская)",
     "example": "카드로 계산해요.",
     "exampleTranslation": "Я расплачиваюсь картой.",
@@ -1510,10 +1649,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:money", "topic:shopping", "list:top500"]
   },
-
   {
     "id": "n_yeohaeng_001",
     "korean": "여행",
+    "transcription_rr": "yeohaeng",
     "translation": "путешествие",
     "example": "여행을 좋아해요.",
     "exampleTranslation": "Я люблю путешествия.",
@@ -1524,6 +1663,7 @@
   {
     "id": "n_sajin_001",
     "korean": "사진",
+    "transcription_rr": "sajin",
     "translation": "фото",
     "example": "사진을 찍어요.",
     "exampleTranslation": "Я фотографирую.",
@@ -1534,6 +1674,7 @@
   {
     "id": "v_jjikda_001",
     "korean": "찍다",
+    "transcription_rr": "jjikda",
     "translation": "снимать / фотографировать",
     "example": "사진을 찍어요.",
     "exampleTranslation": "Я делаю фото.",
@@ -1541,10 +1682,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:travel", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_sikdang_001",
     "korean": "식당",
+    "transcription_rr": "sikdang",
     "translation": "ресторан",
     "example": "식당에서 밥을 먹어요.",
     "exampleTranslation": "Я ем в ресторане.",
@@ -1555,6 +1696,7 @@
   {
     "id": "n_cafe_001",
     "korean": "카페",
+    "transcription_rr": "kape",
     "translation": "кафе",
     "example": "카페에 가요.",
     "exampleTranslation": "Я иду в кафе.",
@@ -1562,10 +1704,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:food", "topic:city", "list:top500"]
   },
-
   {
     "id": "n_saenggak_001",
     "korean": "생각",
+    "transcription_rr": "saenggak",
     "translation": "мысль",
     "example": "좋은 생각이에요.",
     "exampleTranslation": "Это хорошая мысль.",
@@ -1576,6 +1718,7 @@
   {
     "id": "adj_geunyang_001",
     "korean": "그냥",
+    "transcription_rr": "geunyang",
     "translation": "просто / как-то так",
     "example": "그냥 집에 있었어요.",
     "exampleTranslation": "Я просто был(а) дома.",
@@ -1583,10 +1726,10 @@
     "audioKey": null,
     "tags": ["pos:adjective", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_byeongwon_001",
     "korean": "병원",
+    "transcription_rr": "byeongwon",
     "translation": "больница",
     "example": "병원에 가요.",
     "exampleTranslation": "Я иду в больницу.",
@@ -1597,6 +1740,7 @@
   {
     "id": "n_yak_001",
     "korean": "약",
+    "transcription_rr": "yak",
     "translation": "лекарство",
     "example": "약을 먹어요.",
     "exampleTranslation": "Я принимаю лекарство.",
@@ -1604,10 +1748,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_jigeum_sigan_001",
     "korean": "현재",
+    "transcription_rr": "hyeonjae",
     "translation": "сейчас / текущий",
     "example": "현재 시간은 3시예요.",
     "exampleTranslation": "Сейчас 3 часа.",
@@ -1615,10 +1759,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:time", "list:top500"]
   },
-
   {
     "id": "n_mun_001",
     "korean": "문",
+    "transcription_rr": "mun",
     "translation": "дверь",
     "example": "문을 열어 주세요.",
     "exampleTranslation": "Откройте дверь, пожалуйста.",
@@ -1629,6 +1773,7 @@
   {
     "id": "v_yeolda_001",
     "korean": "열다",
+    "transcription_rr": "yeolda",
     "translation": "открывать",
     "example": "문을 열어요.",
     "exampleTranslation": "Я открываю дверь.",
@@ -1639,6 +1784,7 @@
   {
     "id": "v_datda_001",
     "korean": "닫다",
+    "transcription_rr": "datda",
     "translation": "закрывать",
     "example": "문을 닫아요.",
     "exampleTranslation": "Я закрываю дверь.",
@@ -1646,10 +1792,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_jangso_001",
     "korean": "장소",
+    "transcription_rr": "jangso",
     "translation": "место",
     "example": "좋은 장소예요.",
     "exampleTranslation": "Это хорошее место.",
@@ -1660,6 +1806,7 @@
   {
     "id": "n_daeum_001",
     "korean": "다음",
+    "transcription_rr": "daeum",
     "translation": "следующий",
     "example": "다음 주에 만나요.",
     "exampleTranslation": "Встретимся на следующей неделе.",
@@ -1670,6 +1817,7 @@
   {
     "id": "n_iju_001",
     "korean": "이번 주",
+    "transcription_rr": "ibeon ju",
     "translation": "на этой неделе",
     "example": "이번 주에 바빠요.",
     "exampleTranslation": "На этой неделе я занят(а).",
@@ -1677,10 +1825,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:time", "list:top500"]
   },
-
   {
     "id": "n_sujebi_001",
     "korean": "국",
+    "transcription_rr": "guk",
     "translation": "суп",
     "example": "국을 먹어요.",
     "exampleTranslation": "Я ем суп.",
@@ -1691,6 +1839,7 @@
   {
     "id": "n_gimchi_001",
     "korean": "김치",
+    "transcription_rr": "gimchi",
     "translation": "кимчи",
     "example": "김치를 좋아해요.",
     "exampleTranslation": "Я люблю кимчи.",
@@ -1701,6 +1850,7 @@
   {
     "id": "n_bapbowl_001",
     "korean": "그릇",
+    "transcription_rr": "geureut",
     "translation": "миска / посуда",
     "example": "그릇이 필요해요.",
     "exampleTranslation": "Мне нужна миска.",
@@ -1708,10 +1858,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:food", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_sidae_001",
     "korean": "시계",
+    "transcription_rr": "sigye",
     "translation": "часы",
     "example": "시계를 봐요.",
     "exampleTranslation": "Я смотрю на часы.",
@@ -1722,6 +1872,7 @@
   {
     "id": "n_jeon_001",
     "korean": "전",
+    "transcription_rr": "jeon",
     "translation": "до (времени) / до того",
     "example": "3시 전에 와요.",
     "exampleTranslation": "Приходи до 3 часов.",
@@ -1732,6 +1883,7 @@
   {
     "id": "n_hu_001",
     "korean": "후",
+    "transcription_rr": "hu",
     "translation": "после",
     "example": "수업 후에 커피를 마셔요.",
     "exampleTranslation": "После урока пью кофе.",
@@ -1739,10 +1891,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:time", "topic:study", "topic:food", "list:top500"]
   },
-
   {
     "id": "n_sujeong_001",
     "korean": "수정",
+    "transcription_rr": "sujeong",
     "translation": "исправление",
     "example": "수정이 필요해요.",
     "exampleTranslation": "Нужно исправление.",
@@ -1753,6 +1905,7 @@
   {
     "id": "v_gocheoda_001",
     "korean": "고치다",
+    "transcription_rr": "gochida",
     "translation": "исправлять / чинить",
     "example": "문장을 고쳐 주세요.",
     "exampleTranslation": "Исправьте предложение, пожалуйста.",
@@ -1760,10 +1913,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:study", "topic:work", "list:top500"]
   },
-
   {
     "id": "n_hol_001",
     "korean": "홀",
+    "transcription_rr": "hol",
     "translation": "зал (в кафе/ресторане)",
     "example": "홀에 자리가 있어요.",
     "exampleTranslation": "В зале есть места.",
@@ -1771,10 +1924,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:food", "topic:city", "list:top500"]
   },
-
   {
     "id": "v_jota_like_002",
     "korean": "좋아하다",
+    "transcription_rr": "joahada",
     "translation": "любить / нравиться",
     "example": "저는 한국어를 좋아해요.",
     "exampleTranslation": "Мне нравится корейский язык.",
@@ -1785,6 +1938,7 @@
   {
     "id": "v_sireohada_001",
     "korean": "싫어하다",
+    "transcription_rr": "sireohada",
     "translation": "не любить",
     "example": "저는 비를 싫어해요.",
     "exampleTranslation": "Я не люблю дождь.",
@@ -1792,10 +1946,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:weather", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_byeol_001",
     "korean": "별",
+    "transcription_rr": "byeol",
     "translation": "звезда",
     "example": "밤에 별을 봐요.",
     "exampleTranslation": "Ночью я смотрю на звёзды.",
@@ -1803,10 +1957,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:weather", "topic:travel", "list:top500"]
   },
-
   {
     "id": "n_hanguk_001",
     "korean": "한국",
+    "transcription_rr": "Hanguk",
     "translation": "Корея",
     "example": "한국에 가고 싶어요.",
     "exampleTranslation": "Я хочу поехать в Корею.",
@@ -1817,6 +1971,7 @@
   {
     "id": "n_seoul_001",
     "korean": "서울",
+    "transcription_rr": "Seoul",
     "translation": "Сеул",
     "example": "서울은 큰 도시예요.",
     "exampleTranslation": "Сеул — большой город.",
@@ -1824,10 +1979,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:travel", "topic:city", "list:top500"]
   },
-
   {
     "id": "v_gatgo_sipda_001",
     "korean": "갖고 싶다",
+    "transcription_rr": "gatgo sipda",
     "translation": "хотеть иметь",
     "example": "새 휴대폰을 갖고 싶어요.",
     "exampleTranslation": "Я хочу новый телефон.",
@@ -1838,6 +1993,7 @@
   {
     "id": "n_hyudaepon_001",
     "korean": "휴대폰",
+    "transcription_rr": "hyudaepon",
     "translation": "телефон (мобильный)",
     "example": "휴대폰이 어디 있어요?",
     "exampleTranslation": "Где мой телефон?",
@@ -1845,10 +2001,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:daily", "topic:work", "list:top500"]
   },
-
   {
     "id": "n_siganpyo_001",
     "korean": "시간표",
+    "transcription_rr": "siganpyo",
     "translation": "расписание",
     "example": "시간표를 봐요.",
     "exampleTranslation": "Я смотрю расписание.",
@@ -1856,10 +2012,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:study", "topic:time", "list:top500"]
   },
-
   {
     "id": "n_yeong_001",
     "korean": "영수증",
+    "transcription_rr": "yeongsujeung",
     "translation": "чек",
     "example": "영수증 주세요.",
     "exampleTranslation": "Дайте чек, пожалуйста.",
@@ -1867,10 +2023,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:shopping", "topic:money", "list:top500"]
   },
-
   {
     "id": "n_gyeongchal_001",
     "korean": "경찰",
+    "transcription_rr": "gyeongchal",
     "translation": "полиция",
     "example": "경찰서가 어디예요?",
     "exampleTranslation": "Где полицейский участок?",
@@ -1878,10 +2034,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:city", "topic:travel", "list:top500"]
   },
-
   {
     "id": "n_uiwon_001",
     "korean": "의사",
+    "transcription_rr": "uisa",
     "translation": "врач",
     "example": "의사에게 물어봐요.",
     "exampleTranslation": "Я спрашиваю врача.",
@@ -1889,10 +2045,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_hyeonjae_001",
     "korean": "지하",
+    "transcription_rr": "jiha",
     "translation": "подземный / подземка (букв.)",
     "example": "지하철은 지하에 있어요.",
     "exampleTranslation": "Метро находится под землёй.",
@@ -1900,10 +2056,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:city", "topic:travel", "list:top500"]
   },
-
   {
     "id": "v_sipda_001",
     "korean": "싶다",
+    "transcription_rr": "sipda",
     "translation": "хотеть (сделать)",
     "example": "한국에 가고 싶어요.",
     "exampleTranslation": "Я хочу поехать в Корею.",
@@ -1911,10 +2067,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:travel", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_yeong_eo_001",
     "korean": "영어",
+    "transcription_rr": "yeongeo",
     "translation": "английский язык",
     "example": "영어를 공부해요.",
     "exampleTranslation": "Я учу английский.",
@@ -1925,6 +2081,7 @@
   {
     "id": "n_hangugeo_001",
     "korean": "한국어",
+    "transcription_rr": "hangugeo",
     "translation": "корейский язык",
     "example": "한국어를 공부해요.",
     "exampleTranslation": "Я учу корейский язык.",
@@ -1932,10 +2089,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:study", "list:top500"]
   },
-
   {
     "id": "n_bokseup_001",
     "korean": "복습",
+    "transcription_rr": "bokseup",
     "translation": "повторение (учёба)",
     "example": "매일 복습해요.",
     "exampleTranslation": "Я повторяю каждый день.",
@@ -1943,10 +2100,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:study", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_sijak_001",
     "korean": "시작",
+    "transcription_rr": "sijak",
     "translation": "начало",
     "example": "지금 시작해요.",
     "exampleTranslation": "Начинаем сейчас.",
@@ -1957,6 +2114,7 @@
   {
     "id": "v_sijakhada_001",
     "korean": "시작하다",
+    "transcription_rr": "sijakhada",
     "translation": "начинать",
     "example": "공부를 시작해요.",
     "exampleTranslation": "Я начинаю учёбу.",
@@ -1964,10 +2122,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:study", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_kkeut_001",
     "korean": "끝",
+    "transcription_rr": "kkeut",
     "translation": "конец",
     "example": "수업이 끝났어요.",
     "exampleTranslation": "Урок закончился.",
@@ -1978,6 +2136,7 @@
   {
     "id": "v_kkeutnada_001",
     "korean": "끝나다",
+    "transcription_rr": "kkeutnada",
     "translation": "заканчиваться",
     "example": "일이 끝났어요.",
     "exampleTranslation": "Работа закончилась.",
@@ -1985,10 +2144,10 @@
     "audioKey": null,
     "tags": ["pos:verb", "topic:work", "topic:time", "list:top500"]
   },
-
   {
     "id": "n_yaksok_001",
     "korean": "약속",
+    "transcription_rr": "yaksok",
     "translation": "встреча / договорённость",
     "example": "내일 약속이 있어요.",
     "exampleTranslation": "У меня завтра встреча.",
@@ -1996,10 +2155,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:daily", "topic:time", "list:top500"]
   },
-
   {
     "id": "n_yeonggam_001",
     "korean": "영감",
+    "transcription_rr": "yeonggam",
     "translation": "вдохновение",
     "example": "영감이 필요해요.",
     "exampleTranslation": "Мне нужно вдохновение.",
@@ -2007,10 +2166,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:description", "list:top500"]
   },
-
   {
     "id": "adj_ttakhae_001",
     "korean": "따뜻하다",
+    "transcription_rr": "ttatteuthada",
     "translation": "тёплый",
     "example": "오늘은 따뜻해요.",
     "exampleTranslation": "Сегодня тепло.",
@@ -2021,6 +2180,7 @@
   {
     "id": "adj_chupda_001",
     "korean": "춥다",
+    "transcription_rr": "chupda",
     "translation": "холодно",
     "example": "밖이 추워요.",
     "exampleTranslation": "На улице холодно.",
@@ -2031,6 +2191,7 @@
   {
     "id": "adj_deopda_001",
     "korean": "덥다",
+    "transcription_rr": "deopda",
     "translation": "жарко",
     "example": "오늘은 더워요.",
     "exampleTranslation": "Сегодня жарко.",
@@ -2041,6 +2202,7 @@
   {
     "id": "adj_siwonhada_001",
     "korean": "시원하다",
+    "transcription_rr": "siwonhada",
     "translation": "прохладно / освежающий",
     "example": "가을은 시원해요.",
     "exampleTranslation": "Осенью прохладно.",
@@ -2048,10 +2210,10 @@
     "audioKey": null,
     "tags": ["pos:adjective", "topic:weather", "topic:seasons", "list:top500"]
   },
-
   {
     "id": "n_han_gang_001",
     "korean": "한강",
+    "transcription_rr": "Hangang",
     "translation": "река Ханган",
     "example": "한강에 가요.",
     "exampleTranslation": "Я иду на Ханган.",
@@ -2059,10 +2221,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:travel", "topic:city", "list:top500"]
   },
-
   {
     "id": "n_jae미_001",
     "korean": "재미",
+    "transcription_rr": "jaemi",
     "translation": "интерес / веселье",
     "example": "재미있어요.",
     "exampleTranslation": "Это интересно.",
@@ -2073,6 +2235,7 @@
   {
     "id": "adj_jaemiitda_001",
     "korean": "재미있다",
+    "transcription_rr": "jaemiitda",
     "translation": "интересный",
     "example": "이 영화는 재미있어요.",
     "exampleTranslation": "Этот фильм интересный.",
@@ -2083,6 +2246,7 @@
   {
     "id": "adj_jaemioeopda_001",
     "korean": "재미없다",
+    "transcription_rr": "jaemieopda",
     "translation": "неинтересный",
     "example": "이 책은 재미없어요.",
     "exampleTranslation": "Эта книга неинтересная.",
@@ -2090,10 +2254,10 @@
     "audioKey": null,
     "tags": ["pos:adjective", "topic:daily", "topic:description", "list:top500"]
   },
-
   {
     "id": "n_su_001",
     "korean": "수",
+    "transcription_rr": "su",
     "translation": "число / количество",
     "example": "수는 중요해요.",
     "exampleTranslation": "Числа важны.",
@@ -2101,10 +2265,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:counters", "topic:study", "list:top500"]
   },
-
   {
     "id": "n_sayang_001",
     "korean": "사양",
+    "transcription_rr": "sayang",
     "translation": "характеристики (тех.)",
     "example": "사양을 확인해요.",
     "exampleTranslation": "Я проверяю характеристики.",
@@ -2112,10 +2276,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:shopping", "topic:work", "list:top500"]
   },
-
   {
     "id": "n_sidae2_001",
     "korean": "시대",
+    "transcription_rr": "sidae",
     "translation": "эпоха",
     "example": "새 시대예요.",
     "exampleTranslation": "Это новая эпоха.",
@@ -2123,10 +2287,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:description", "list:top500"]
   },
-
   {
     "id": "n_hyeonsil2_001",
     "korean": "생활",
+    "transcription_rr": "saenghwal",
     "translation": "жизнь / быт",
     "example": "한국 생활은 어때요?",
     "exampleTranslation": "Как вам жизнь в Корее?",
@@ -2134,10 +2298,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:daily", "topic:travel", "list:top500"]
   },
-
   {
     "id": "n_ju_001",
     "korean": "주",
+    "transcription_rr": "ju",
     "translation": "неделя",
     "example": "이번 주에 바빠요.",
     "exampleTranslation": "На этой неделе я занят(а).",
@@ -2145,10 +2309,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:time", "list:top500"]
   },
-
   {
     "id": "n_hakhoe_001",
     "korean": "회의",
+    "transcription_rr": "hoeui",
     "translation": "совещание / встреча (рабочая)",
     "example": "회의가 있어요.",
     "exampleTranslation": "У меня есть совещание.",
@@ -2156,10 +2320,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:work", "topic:daily", "list:top500"]
   },
-
   {
     "id": "n_jeonja_001",
     "korean": "전자",
+    "transcription_rr": "jeonja",
     "translation": "электронный",
     "example": "전자 영수증이에요.",
     "exampleTranslation": "Это электронный чек.",
@@ -2167,10 +2331,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:shopping", "topic:work", "list:top500"]
   },
-
   {
     "id": "n_saegim_001",
     "korean": "색",
+    "transcription_rr": "saek",
     "translation": "цвет",
     "example": "이 색이 좋아요.",
     "exampleTranslation": "Мне нравится этот цвет.",
@@ -2178,10 +2342,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:description", "topic:shopping", "list:top500"]
   },
-
   {
     "id": "adj_paran_001",
     "korean": "파란색",
+    "transcription_rr": "paransaek",
     "translation": "синий цвет",
     "example": "파란색을 좋아해요.",
     "exampleTranslation": "Я люблю синий цвет.",
@@ -2189,10 +2353,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:description", "list:top500"]
   },
-
   {
     "id": "n_sigan_gage_001",
     "korean": "가격",
+    "transcription_rr": "gagyeok",
     "translation": "цена",
     "example": "가격이 얼마예요?",
     "exampleTranslation": "Какая цена?",
@@ -2200,10 +2364,10 @@
     "audioKey": null,
     "tags": ["pos:noun", "topic:money", "topic:shopping", "list:top100", "list:top500"]
   },
-
   {
     "id": "n_gamsa_001",
     "korean": "감사",
+    "transcription_rr": "gamsa",
     "translation": "благодарность",
     "example": "감사를 전해요.",
     "exampleTranslation": "Передаю благодарность.",

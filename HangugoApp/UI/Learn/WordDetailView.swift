@@ -4,39 +4,59 @@ import SwiftUI
 
 struct WordDetailView: View {
     let word: Word
+    private let speech = SpeechService.shared
 
     var body: some View {
         List {
             Section(L10n.Common.wordSection) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(word.korean)
-                        .font(.system(size: 34, weight: .semibold))
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(alignment: .firstTextBaseline, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(word.korean)
+                                .font(.system(size: 34, weight: .semibold))
 
-                    Text(word.translation)
-                        .foregroundStyle(.secondary)
+                            if let rr = normalizedRR(word.transcriptionRR) {
+                                Text(rr)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
+
+                            Text(word.translation)
+                                .foregroundStyle(.secondary)
+                        }
+
+                        Spacer()
+
+                        Button {
+                            speech.speakKorean(word.korean)
+                        } label: {
+                            Image(systemName: "speaker.wave.2.fill")
+                                .foregroundStyle(.primary)
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityLabel("Произнести слово")
+                    }
                 }
                 .padding(.vertical, 2)
-            }
-
-            Section(L10n.WordDetail.translationSection) {
-                Text(word.translation)
-            }
-
-            if let imageName = word.imageAssetName {
-                Section(L10n.WordDetail.imageSection) {
-                    Image(imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding(.vertical, 2)
-                }
             }
 
             Section(L10n.Common.exampleSection) {
                 if let example = word.example, !example.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(example)
+                        HStack(alignment: .firstTextBaseline, spacing: 12) {
+                            Text(example)
+
+                            Spacer()
+
+                            Button {
+                                speech.speakKorean(example)
+                            } label: {
+                                Image(systemName: "speaker.wave.2.fill")
+                                    .foregroundStyle(.primary)
+                            }
+                            .buttonStyle(.borderless)
+                            .accessibilityLabel("Произнести пример")
+                        }
 
                         if let exTr = word.exampleTranslation, !exTr.isEmpty {
                             Text(exTr)
@@ -58,5 +78,9 @@ struct WordDetailView: View {
         .navigationTitle(word.korean)
         .navigationBarTitleDisplayMode(.inline)
     }
-}
 
+    private func normalizedRR(_ rr: String?) -> String? {
+        guard let rr = rr?.trimmingCharacters(in: .whitespacesAndNewlines), !rr.isEmpty else { return nil }
+        return rr
+    }
+}

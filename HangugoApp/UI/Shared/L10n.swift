@@ -68,12 +68,34 @@ enum L10n {
 
     enum Settings {
         static let navTitle = "Настройки"
+
         static let newWordsSessionSection = "Сессия новых слов"
         static let wordsPerSession = "Слов за сессию"
 
         static let firstReviewTomorrow = "Первое повторение — завтра"
         static let firstReviewTomorrowOnHint = "Слова попадут в повторение начиная с завтрашнего дня."
         static let firstReviewTomorrowOffHint = "Слова могут появиться в повторении уже сегодня."
+
+        static let speechSection = "Произношение"
+        static let speechSpeed = "Скорость"
+        static let speechSlow = "Медленно"
+        static let speechFast = "Быстро"
+        static let speechHint = "Скорость применяется к озвучке слов и примеров."
+
+        static let speechVoice = "Голос"
+        static let speechVoiceAuto = "Авто (лучший доступный)"
+        static let speechTest = "Проверить произношение"
+
+        static let voiceHelpTitle = "Голоса озвучки"
+        static let voiceHelpMessage = """
+        Если озвучка звучит плохо или голосов мало, скачай корейские голоса в настройках iPhone:
+
+        Настройки → Универсальный доступ → Озвучивание контента → Голоса → Корейский.
+
+        После скачивания перезапусти приложение.
+        """
+        static let voiceHelpOk = "Понятно"
+        static let voiceHelpAccessibilityLabel = "Как скачать голоса озвучки"
     }
 
     enum Categories {

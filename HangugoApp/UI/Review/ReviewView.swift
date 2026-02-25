@@ -6,6 +6,8 @@ struct ReviewView: View {
     @StateObject private var vm = ReviewViewModel()
     @State private var isAnswerRevealed: Bool = false
 
+    private let speech = SpeechService.shared
+
     var body: some View {
         List {
             Section(L10n.Review.todaySection) {
@@ -19,10 +21,8 @@ struct ReviewView: View {
             if vm.dueCount == 0 {
                 Section {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(L10n.Review.doneTitle)
-                            .font(.headline)
-                        Text(L10n.Review.doneSubtitle)
-                            .foregroundStyle(.secondary)
+                        Text(L10n.Review.doneTitle).font(.headline)
+                        Text(L10n.Review.doneSubtitle).foregroundStyle(.secondary)
 
                         NavigationLink(L10n.Review.goToPractice) {
                             PracticeView()
@@ -33,8 +33,29 @@ struct ReviewView: View {
             } else if let word = vm.currentWord {
                 Section(L10n.Common.wordSection) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text(word.korean)
-                            .font(.system(size: 34, weight: .semibold))
+                        HStack(alignment: .firstTextBaseline, spacing: 12) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(word.korean)
+                                    .font(.system(size: 34, weight: .semibold))
+
+                                if let rr = normalizedRR(word.transcriptionRR) {
+                                    Text(rr)
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+
+                            Spacer()
+
+                            Button {
+                                speech.speakKorean(word.korean)
+                            } label: {
+                                Image(systemName: "speaker.wave.2.fill")
+                                    .foregroundStyle(.primary)
+                            }
+                            .buttonStyle(.borderless)
+                            .accessibilityLabel("Произнести слово")
+                        }
 
                         revealableAnswerBlock(
                             isRevealed: isAnswerRevealed,
@@ -67,7 +88,20 @@ struct ReviewView: View {
                 if let example = word.example, !example.isEmpty {
                     Section(L10n.Common.exampleSection) {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(example)
+                            HStack(alignment: .firstTextBaseline, spacing: 12) {
+                                Text(example)
+
+                                Spacer()
+
+                                Button {
+                                    speech.speakKorean(example)
+                                } label: {
+                                    Image(systemName: "speaker.wave.2.fill")
+                                        .foregroundStyle(.primary)
+                                }
+                                .buttonStyle(.borderless)
+                                .accessibilityLabel("Произнести пример")
+                            }
 
                             if let exTr = word.exampleTranslation, !exTr.isEmpty {
                                 Text(exTr)
@@ -90,25 +124,19 @@ struct ReviewView: View {
                 }
 
                 Section(L10n.Review.ratingSection) {
-                    Button {
-                        rateAndAdvance(.hard)
-                    } label: {
+                    Button { rateAndAdvance(.hard) } label: {
                         Label(L10n.Review.btnHard, systemImage: "tortoise")
                             .fontWeight(.semibold)
                     }
                     .disabled(!isAnswerRevealed)
 
-                    Button {
-                        rateAndAdvance(.normal)
-                    } label: {
+                    Button { rateAndAdvance(.normal) } label: {
                         Label(L10n.Review.btnNormal, systemImage: "figure.walk")
                             .fontWeight(.semibold)
                     }
                     .disabled(!isAnswerRevealed)
 
-                    Button {
-                        rateAndAdvance(.easy)
-                    } label: {
+                    Button { rateAndAdvance(.easy) } label: {
                         Label(L10n.Review.btnEasy, systemImage: "hare")
                             .fontWeight(.semibold)
                     }
@@ -130,6 +158,11 @@ struct ReviewView: View {
             vm.load()
             isAnswerRevealed = false
         }
+    }
+
+    private func normalizedRR(_ rr: String?) -> String? {
+        guard let rr = rr?.trimmingCharacters(in: .whitespacesAndNewlines), !rr.isEmpty else { return nil }
+        return rr
     }
 
     private func rateAndAdvance(_ rating: ReviewRating) {
@@ -166,14 +199,8 @@ struct ReviewView: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            if !isRevealed {
-                onReveal()
-            }
+            if !isRevealed { onReveal() }
         }
         .accessibilityAddTraits(.isButton)
     }
-}
-
-#Preview {
-    NavigationStack { ReviewView() }
 }

@@ -11,6 +11,8 @@ struct NewWordsSessionView: View {
     @StateObject private var vm = NewWordsSessionViewModel()
     @State private var isAnswerShown: Bool = false
 
+    private let speech = SpeechService.shared
+
     var body: some View {
         List {
             Section {
@@ -46,8 +48,29 @@ struct NewWordsSessionView: View {
             } else if let item = vm.currentItem {
                 Section(L10n.Common.wordSection) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text(item.word.korean)
-                            .font(.system(size: 34, weight: .semibold))
+                        HStack(alignment: .firstTextBaseline, spacing: 12) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(item.word.korean)
+                                    .font(.system(size: 34, weight: .semibold))
+
+                                if let rr = normalizedRR(item.word.transcriptionRR) {
+                                    Text(rr)
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+
+                            Spacer()
+
+                            Button {
+                                speech.speakKorean(item.word.korean)
+                            } label: {
+                                Image(systemName: "speaker.wave.2.fill")
+                                    .foregroundStyle(.primary)
+                            }
+                            .buttonStyle(.borderless)
+                            .accessibilityLabel("Произнести слово")
+                        }
 
                         revealableAnswerBlock(
                             isRevealed: isAnswerShown,
@@ -80,7 +103,20 @@ struct NewWordsSessionView: View {
                 if let example = item.word.example, !example.isEmpty {
                     Section(L10n.Common.exampleSection) {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(example)
+                            HStack(alignment: .firstTextBaseline, spacing: 12) {
+                                Text(example)
+
+                                Spacer()
+
+                                Button {
+                                    speech.speakKorean(example)
+                                } label: {
+                                    Image(systemName: "speaker.wave.2.fill")
+                                        .foregroundStyle(.primary)
+                                }
+                                .buttonStyle(.borderless)
+                                .accessibilityLabel("Произнести пример")
+                            }
 
                             if let exTr = item.word.exampleTranslation, !exTr.isEmpty {
                                 Text(exTr)
@@ -153,7 +189,6 @@ struct NewWordsSessionView: View {
         .navigationTitle(L10n.NewWordsSession.navTitle)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            // Стартуем один раз при первом появлении
             if vm.goal == 0 && vm.masteredCount == 0 && vm.queue.isEmpty && vm.errorMessage == nil {
                 isAnswerShown = false
                 vm.start(words: words, sessionSize: newWordsPerSession, firstReviewTomorrow: firstReviewTomorrow)
@@ -161,7 +196,11 @@ struct NewWordsSessionView: View {
         }
     }
 
-    // MARK: - Helper: revealable answer block
+    private func normalizedRR(_ rr: String?) -> String? {
+        guard let rr = rr?.trimmingCharacters(in: .whitespacesAndNewlines), !rr.isEmpty else { return nil }
+        return rr
+    }
+
     @ViewBuilder
     private func revealableAnswerBlock<Content: View>(
         isRevealed: Bool,
@@ -191,9 +230,7 @@ struct NewWordsSessionView: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            if !isRevealed {
-                onReveal()
-            }
+            if !isRevealed { onReveal() }
         }
         .accessibilityAddTraits(.isButton)
     }
