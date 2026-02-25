@@ -3,8 +3,15 @@
 import SwiftUI
 
 struct WordDetailView: View {
+    private let container: AppContainer
     let word: Word
-    private let speech = SpeechService.shared
+    private let speech: SpeechService
+
+    init(container: AppContainer, word: Word) {
+        self.container = container
+        self.word = word
+        self.speech = container.speechService
+    }
 
     var body: some View {
         List {
@@ -71,7 +78,7 @@ struct WordDetailView: View {
 
             Section(L10n.WordDetail.practiceSection) {
                 NavigationLink(L10n.WordDetail.tryInPractice) {
-                    PracticeView()
+                    PracticeView(container: container, word: word)
                 }
             }
         }

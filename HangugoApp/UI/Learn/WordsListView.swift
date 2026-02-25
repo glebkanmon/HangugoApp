@@ -3,9 +3,15 @@
 import SwiftUI
 
 struct WordsListView: View {
+    private let container: AppContainer
     let words: [Word]
 
     @State private var searchText: String = ""
+
+    init(container: AppContainer, words: [Word]) {
+        self.container = container
+        self.words = words
+    }
 
     private var filteredWords: [Word] {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -34,7 +40,7 @@ struct WordsListView: View {
                 Section {
                     ForEach(filteredWords) { word in
                         NavigationLink {
-                            WordDetailView(word: word)
+                            WordDetailView(container: container, word: word)
                         } label: {
                             WordRow(word: word)
                         }
@@ -50,6 +56,6 @@ struct WordsListView: View {
 
 #Preview {
     NavigationStack {
-        WordsListView(words: [])
+        WordsListView(container: AppContainer(), words: [])
     }
 }

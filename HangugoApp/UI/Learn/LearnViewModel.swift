@@ -13,14 +13,27 @@ final class LearnViewModel: ObservableObject {
     @Published private(set) var dueToday: Int = 0
     @Published private(set) var categoriesSummary: String = L10n.Learn.categoriesAll
 
-    private let srs = SRSService(store: FileSRSStore())
-    private let known = KnownWordsService(store: FileKnownWordsStore())
-    private let selectedTags = SelectedTagsService(store: FileSelectedTagsStore())
+    private let wordsLoader: WordsLoading
+    private let srs: SRSService
+    private let known: KnownWordsService
+    private let selectedTags: SelectedTagsService
+
+    init(
+        wordsLoader: WordsLoading,
+        srs: SRSService,
+        known: KnownWordsService,
+        selectedTags: SelectedTagsService
+    ) {
+        self.wordsLoader = wordsLoader
+        self.srs = srs
+        self.known = known
+        self.selectedTags = selectedTags
+    }
 
     func load() {
         do {
             // 1) слова
-            words = try BundledWordsLoader.loadWords()
+            words = try wordsLoader.loadWords()
 
             // 2) SRS
             try srs.load()

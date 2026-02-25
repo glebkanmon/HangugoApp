@@ -8,16 +8,18 @@ final class ReviewViewModel: ObservableObject {
     @Published private(set) var currentWord: Word?
     @Published var errorMessage: String?
 
+    private let wordsLoader: WordsLoading
     private let srs: SRSService
     private var wordsById: [String: Word] = [:]
 
-    init(srs: SRSService = SRSService(store: FileSRSStore())) {
+    init(wordsLoader: WordsLoading, srs: SRSService) {
+        self.wordsLoader = wordsLoader
         self.srs = srs
     }
 
     func load() {
         do {
-            let words = try BundledWordsLoader.loadWords()
+            let words = try wordsLoader.loadWords()
             wordsById = Dictionary(uniqueKeysWithValues: words.map { ($0.id, $0) })
 
             try srs.load()
@@ -33,7 +35,6 @@ final class ReviewViewModel: ObservableObject {
         }
     }
 
-    
     func rateCurrent(_ rating: ReviewRating) {
         guard let word = currentWord else { return }
 

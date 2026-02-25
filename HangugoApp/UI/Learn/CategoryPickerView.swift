@@ -3,10 +3,17 @@
 import SwiftUI
 
 struct CategoryPickerView: View {
+    private let container: AppContainer
     @StateObject private var vm: CategoryPickerViewModel
 
-    init(words: [Word]) {
-        _vm = StateObject(wrappedValue: CategoryPickerViewModel(words: words))
+    init(container: AppContainer, words: [Word]) {
+        self.container = container
+        _vm = StateObject(
+            wrappedValue: CategoryPickerViewModel(
+                words: words,
+                service: container.makeSelectedTagsService()
+            )
+        )
     }
 
     var body: some View {

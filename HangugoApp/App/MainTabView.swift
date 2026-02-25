@@ -1,24 +1,26 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @Environment(\.appContainer) private var container
+
     var body: some View {
         TabView {
             NavigationStack {
-                LearnView()
+                LearnView(container: container)
             }
             .tabItem {
                 Label("Изучение", systemImage: "book")
             }
 
             NavigationStack {
-                PracticeView()
+                PracticeView(container: container)
             }
             .tabItem {
                 Label("Практика", systemImage: "square.and.pencil")
             }
 
             NavigationStack {
-                SettingsView()
+                SettingsView(container: container)
             }
             .tabItem {
                 Label("Настройки", systemImage: "gearshape")

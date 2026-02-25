@@ -3,10 +3,22 @@
 import SwiftUI
 
 struct ReviewView: View {
-    @StateObject private var vm = ReviewViewModel()
+    private let container: AppContainer
+    @StateObject private var vm: ReviewViewModel
     @State private var isAnswerRevealed: Bool = false
 
-    private let speech = SpeechService.shared
+    private let speech: SpeechService
+
+    init(container: AppContainer) {
+        self.container = container
+        _vm = StateObject(
+            wrappedValue: ReviewViewModel(
+                wordsLoader: container.wordsLoader,
+                srs: container.makeSRSService()
+            )
+        )
+        self.speech = container.speechService
+    }
 
     var body: some View {
         List {
@@ -25,7 +37,7 @@ struct ReviewView: View {
                         Text(L10n.Review.doneSubtitle).foregroundStyle(.secondary)
 
                         NavigationLink(L10n.Review.goToPractice) {
-                            PracticeView()
+                            PracticeView(container: container)
                         }
                     }
                     .padding(.vertical, 4)

@@ -14,7 +14,7 @@ final class CategoryPickerViewModel: ObservableObject {
 
     private let service: SelectedTagsService
 
-    init(words: [Word], service: SelectedTagsService = SelectedTagsService(store: FileSelectedTagsStore())) {
+    init(words: [Word], service: SelectedTagsService) {
         self.service = service
 
         let tags = Set(words.flatMap { $0.tags ?? [] })

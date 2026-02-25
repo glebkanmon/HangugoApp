@@ -6,12 +6,23 @@ struct NewWordsSessionView: View {
     @AppStorage("newWordsPerSession") private var newWordsPerSession: Int = 10
     @AppStorage("firstReviewTomorrow") private var firstReviewTomorrow: Bool = true
 
+    private let container: AppContainer
     let words: [Word]
 
-    @StateObject private var vm = NewWordsSessionViewModel()
+    @StateObject private var vm: NewWordsSessionViewModel
     @State private var isAnswerShown: Bool = false
 
-    private let speech = SpeechService.shared
+    private let speech: SpeechService
+
+    init(container: AppContainer, words: [Word]) {
+        self.container = container
+        self.words = words
+
+        let srs = container.makeSRSService()
+        let known = container.makeKnownWordsService()
+        _vm = StateObject(wrappedValue: NewWordsSessionViewModel(srs: srs, known: known))
+        self.speech = container.speechService
+    }
 
     var body: some View {
         List {

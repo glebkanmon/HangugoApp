@@ -4,6 +4,8 @@ import SwiftUI
 import AVFoundation
 
 struct SettingsView: View {
+    private let container: AppContainer
+
     @AppStorage("newWordsPerSession") private var newWordsPerSession: Int = 10
     @AppStorage("firstReviewTomorrow") private var firstReviewTomorrow: Bool = true
 
@@ -14,10 +16,16 @@ struct SettingsView: View {
     }()
 
     @State private var voices: [AVSpeechSynthesisVoice] = []
-    @State private var selectedVoiceId: String? = SpeechService.shared.currentVoiceIdentifier()
+    @State private var selectedVoiceId: String?
     @State private var isVoiceHelpPresented: Bool = false
 
-    private let speech = SpeechService.shared
+    private let speech: SpeechService
+
+    init(container: AppContainer) {
+        self.container = container
+        self.speech = container.speechService
+        _selectedVoiceId = State(initialValue: container.speechService.currentVoiceIdentifier())
+    }
 
     var body: some View {
         Form {
@@ -164,5 +172,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    NavigationStack { SettingsView() }
+    NavigationStack { SettingsView(container: AppContainer()) }
 }

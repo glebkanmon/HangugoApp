@@ -1,10 +1,10 @@
 import SwiftUI
-import Combine
 
 struct PracticeView: View {
+    private let container: AppContainer
     private let word: Word?
 
-    @StateObject private var vm = PracticeViewModel()
+    @StateObject private var vm: PracticeViewModel
     @FocusState private var isInputFocused: Bool
 
     // Limits
@@ -20,8 +20,10 @@ struct PracticeView: View {
         static let result = "RESULT_ANCHOR"
     }
 
-    init(word: Word? = nil) {
+    init(container: AppContainer, word: Word? = nil) {
+        self.container = container
         self.word = word
+        _vm = StateObject(wrappedValue: PracticeViewModel(provider: container.makeLLMProvider()))
     }
 
     var body: some View {

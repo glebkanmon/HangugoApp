@@ -3,14 +3,27 @@
 import SwiftUI
 
 struct LearnView: View {
-    @StateObject private var vm = LearnViewModel()
+    private let container: AppContainer
+    @StateObject private var vm: LearnViewModel
+
+    init(container: AppContainer) {
+        self.container = container
+        _vm = StateObject(
+            wrappedValue: LearnViewModel(
+                wordsLoader: container.wordsLoader,
+                srs: container.makeSRSService(),
+                known: container.makeKnownWordsService(),
+                selectedTags: container.makeSelectedTagsService()
+            )
+        )
+    }
 
     var body: some View {
         List {
             // ✅ Фильтры — в самом верху
             Section(L10n.Learn.filtersSection) {
                 NavigationLink {
-                    CategoryPickerView(words: vm.words)
+                    CategoryPickerView(container: container, words: vm.words)
                 } label: {
                     HStack(spacing: 12) {
                         Image(systemName: "line.3.horizontal.decrease.circle")
@@ -29,7 +42,7 @@ struct LearnView: View {
 
             Section(L10n.Learn.sessionsSection) {
                 NavigationLink {
-                    NewWordsSessionView(words: vm.wordsForLearning)
+                    NewWordsSessionView(container: container, words: vm.wordsForLearning)
                 } label: {
                     HStack(spacing: 12) {
                         Image(systemName: "sparkles")
@@ -46,7 +59,7 @@ struct LearnView: View {
                 .disabled(vm.newWordsAvailable == 0 || vm.wordsForLearning.isEmpty)
 
                 NavigationLink {
-                    ReviewView()
+                    ReviewView(container: container)
                 } label: {
                     HStack(spacing: 12) {
                         Image(systemName: "clock")
@@ -80,17 +93,10 @@ struct LearnView: View {
                     Text(L10n.Learn.loading).foregroundStyle(.secondary)
                 } else {
                     NavigationLink {
-                        WordsListView(words: vm.words)
+                        WordsListView(container: container, words: vm.words)
                     } label: {
                         Label(L10n.Learn.allWords, systemImage: "list.bullet")
                             .foregroundStyle(.primary)
-                    }
-
-                    let first = vm.words[0]
-                    NavigationLink {
-                        WordDetailView(word: first)
-                    } label: {
-                        WordRow(word: first)
                     }
                 }
             }
@@ -101,5 +107,5 @@ struct LearnView: View {
 }
 
 #Preview {
-    NavigationStack { LearnView() }
+    NavigationStack { LearnView(container: AppContainer()) }
 }
