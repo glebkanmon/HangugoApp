@@ -3,8 +3,8 @@ import SwiftUI
 struct ReviewView: View {
     private let container: AppContainer
     @StateObject private var vm: ReviewViewModel
-    @State private var isRevealed: Bool = false
 
+    @State private var isRevealed: Bool = false
     private let speech: SpeechService
 
     init(container: AppContainer) {
@@ -20,6 +20,17 @@ struct ReviewView: View {
 
     var body: some View {
         List {
+            Section {
+                ProgressView(value: vm.progress)
+
+                HStack {
+                    Text("Прогресс: \(vm.completedCount) / \(vm.totalCount)")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+                .accessibilityLabel("Прогресс \(vm.completedCount) из \(vm.totalCount)")
+            }
+
             Section(L10n.Review.todaySection) {
                 if let error = vm.errorMessage {
                     Text(error).foregroundStyle(.secondary)
@@ -31,8 +42,10 @@ struct ReviewView: View {
             if vm.dueCount == 0 {
                 Section {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(L10n.Review.doneTitle).font(.headline)
-                        Text(L10n.Review.doneSubtitle).foregroundStyle(.secondary)
+                        Text(L10n.Review.doneTitle)
+                            .font(.headline)
+                        Text(L10n.Review.doneSubtitle)
+                            .foregroundStyle(.secondary)
 
                         NavigationLink(L10n.Review.goToPractice) {
                             PracticeView(container: container)
@@ -53,7 +66,7 @@ struct ReviewView: View {
                         RevealableContent(
                             isRevealed: $isRevealed,
                             hintText: hintText(hasImage: word.imageAssetName != nil),
-                            accessibilityLabel: "Показать ответ"
+                            accessibilityLabel: "Показать перевод"
                         ) {
                             VStack(alignment: .leading, spacing: 10) {
                                 Text(word.translation)
@@ -85,24 +98,22 @@ struct ReviewView: View {
                     }
                 }
 
-                Section(L10n.Review.ratingSection) {
-                    Button { rateAndAdvance(.hard) } label: {
-                        Label(L10n.Review.btnHard, systemImage: "tortoise")
+                Section {
+                    Button {
+                        vm.remembered()
+                        isRevealed = false
+                    } label: {
+                        Text("Вспомнил")
                             .fontWeight(.semibold)
                     }
-                    .disabled(!isRevealed)
 
-                    Button { rateAndAdvance(.normal) } label: {
-                        Label(L10n.Review.btnNormal, systemImage: "figure.walk")
+                    Button {
+                        vm.showLater()
+                        isRevealed = false
+                    } label: {
+                        Text("Показать ещё")
                             .fontWeight(.semibold)
                     }
-                    .disabled(!isRevealed)
-
-                    Button { rateAndAdvance(.easy) } label: {
-                        Label(L10n.Review.btnEasy, systemImage: "hare")
-                            .fontWeight(.semibold)
-                    }
-                    .disabled(!isRevealed)
                 }
             } else {
                 Section {
@@ -120,11 +131,6 @@ struct ReviewView: View {
             vm.load()
             isRevealed = false
         }
-    }
-
-    private func rateAndAdvance(_ rating: ReviewRating) {
-        vm.rateCurrent(rating)
-        isRevealed = false
     }
 
     private func normalized(_ s: String?) -> String? {
