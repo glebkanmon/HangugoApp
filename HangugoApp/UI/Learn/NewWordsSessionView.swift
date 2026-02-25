@@ -1,5 +1,3 @@
-// UI/Learn/NewWordsSessionView.swift
-
 import SwiftUI
 
 struct NewWordsSessionView: View {
@@ -10,7 +8,7 @@ struct NewWordsSessionView: View {
     let words: [Word]
 
     @StateObject private var vm: NewWordsSessionViewModel
-    @State private var isAnswerShown: Bool = false
+    @State private var isRevealed: Bool = false
 
     private let speech: SpeechService
 
@@ -59,34 +57,17 @@ struct NewWordsSessionView: View {
             } else if let item = vm.currentItem {
                 Section(L10n.Common.wordSection) {
                     VStack(alignment: .leading, spacing: 10) {
-                        HStack(alignment: .firstTextBaseline, spacing: 12) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(item.word.korean)
-                                    .font(.system(size: 34, weight: .semibold))
-
-                                if let rr = normalizedRR(item.word.transcriptionRR) {
-                                    Text(rr)
-                                        .font(.subheadline)
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-
-                            Spacer()
-
-                            Button {
-                                speech.speakKorean(item.word.korean)
-                            } label: {
-                                Image(systemName: "speaker.wave.2.fill")
-                                    .foregroundStyle(.primary)
-                            }
-                            .buttonStyle(.borderless)
-                            .accessibilityLabel("Произнести слово")
+                        WordCardHeaderView(
+                            korean: item.word.korean,
+                            transcriptionRR: item.word.transcriptionRR
+                        ) {
+                            speech.speakKorean(item.word.korean)
                         }
 
-                        revealableAnswerBlock(
-                            isRevealed: isAnswerShown,
-                            hint: L10n.Common.hintTapToRevealAll,
-                            hasImage: item.word.imageAssetName != nil
+                        RevealableContent(
+                            isRevealed: $isRevealed,
+                            hintText: hintText(hasImage: item.word.imageAssetName != nil),
+                            accessibilityLabel: "Показать перевод"
                         ) {
                             VStack(alignment: .leading, spacing: 10) {
                                 Text(item.word.translation)
@@ -101,50 +82,19 @@ struct NewWordsSessionView: View {
                                 }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-
-                        } onReveal: {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                isAnswerShown = true
-                            }
                         }
                     }
                     .padding(.vertical, 2)
                 }
 
-                if let example = item.word.example, !example.isEmpty {
+                if let example = normalized(item.word.example) {
                     Section(L10n.Common.exampleSection) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack(alignment: .firstTextBaseline, spacing: 12) {
-                                Text(example)
-
-                                Spacer()
-
-                                Button {
-                                    speech.speakKorean(example)
-                                } label: {
-                                    Image(systemName: "speaker.wave.2.fill")
-                                        .foregroundStyle(.primary)
-                                }
-                                .buttonStyle(.borderless)
-                                .accessibilityLabel("Произнести пример")
-                            }
-
-                            if let exTr = item.word.exampleTranslation, !exTr.isEmpty {
-                                Text(exTr)
-                                    .foregroundStyle(.secondary)
-                                    .blur(radius: isAnswerShown ? 0 : 12)
-                                    .redacted(reason: isAnswerShown ? [] : .placeholder)
-                                    .opacity(isAnswerShown ? 1 : 0.95)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .contentShape(Rectangle())
-                                    .onTapGesture {
-                                        if !isAnswerShown {
-                                            withAnimation(.easeInOut(duration: 0.2)) {
-                                                isAnswerShown = true
-                                            }
-                                        }
-                                    }
-                            }
+                        ExampleBlockView(
+                            example: example,
+                            exampleTranslation: item.word.exampleTranslation,
+                            isRevealed: $isRevealed
+                        ) {
+                            speech.speakKorean(example)
                         }
                     }
                 }
@@ -153,16 +103,18 @@ struct NewWordsSessionView: View {
                     switch item.state {
                     case .fresh:
                         Button {
-                            isAnswerShown = false
-                            vm.markAlreadyKnown()
+                            resetRevealAndPerform {
+                                vm.markAlreadyKnown()
+                            }
                         } label: {
                             Text(L10n.NewWordsSession.btnAlreadyKnow)
                                 .fontWeight(.semibold)
                         }
 
                         Button {
-                            isAnswerShown = false
-                            vm.startLearning()
+                            resetRevealAndPerform {
+                                vm.startLearning()
+                            }
                         } label: {
                             Text(L10n.NewWordsSession.btnStartLearning)
                                 .fontWeight(.semibold)
@@ -170,16 +122,18 @@ struct NewWordsSessionView: View {
 
                     case .learning:
                         Button {
-                            isAnswerShown = false
-                            vm.showLater()
+                            resetRevealAndPerform {
+                                vm.showLater()
+                            }
                         } label: {
                             Text(L10n.NewWordsSession.btnShowLater)
                                 .fontWeight(.semibold)
                         }
 
                         Button {
-                            isAnswerShown = false
-                            vm.markMastered()
+                            resetRevealAndPerform {
+                                vm.markMastered()
+                            }
                         } label: {
                             Text(L10n.NewWordsSession.btnMastered)
                                 .fontWeight(.semibold)
@@ -195,54 +149,29 @@ struct NewWordsSessionView: View {
         }
         .id(vm.currentItem?.id ?? "no_word")
         .onChange(of: vm.currentItem?.id) { _ in
-            isAnswerShown = false
+            isRevealed = false
         }
         .navigationTitle(L10n.NewWordsSession.navTitle)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             if vm.goal == 0 && vm.masteredCount == 0 && vm.queue.isEmpty && vm.errorMessage == nil {
-                isAnswerShown = false
+                isRevealed = false
                 vm.start(words: words, sessionSize: newWordsPerSession, firstReviewTomorrow: firstReviewTomorrow)
             }
         }
     }
 
-    private func normalizedRR(_ rr: String?) -> String? {
-        guard let rr = rr?.trimmingCharacters(in: .whitespacesAndNewlines), !rr.isEmpty else { return nil }
-        return rr
+    private func resetRevealAndPerform(_ action: () -> Void) {
+        isRevealed = false
+        action()
     }
 
-    @ViewBuilder
-    private func revealableAnswerBlock<Content: View>(
-        isRevealed: Bool,
-        hint: String,
-        hasImage: Bool,
-        @ViewBuilder content: () -> Content,
-        onReveal: @escaping () -> Void
-    ) -> some View {
-        ZStack {
-            content()
-                .blur(radius: isRevealed ? 0 : 12)
-                .redacted(reason: isRevealed ? [] : .placeholder)
-                .opacity(isRevealed ? 1 : 0.95)
+    private func normalized(_ s: String?) -> String? {
+        guard let s = s?.trimmingCharacters(in: .whitespacesAndNewlines), !s.isEmpty else { return nil }
+        return s
+    }
 
-            HStack(spacing: 8) {
-                Image(systemName: "hand.tap")
-                    .foregroundStyle(.secondary)
-                Text(hasImage ? hint : L10n.Common.hintTapToRevealTranslation)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.vertical, 10)
-            .frame(maxWidth: .infinity)
-            .opacity(isRevealed ? 0 : 1)
-            .allowsHitTesting(false)
-            .accessibilityHidden(isRevealed)
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            if !isRevealed { onReveal() }
-        }
-        .accessibilityAddTraits(.isButton)
+    private func hintText(hasImage: Bool) -> String {
+        hasImage ? L10n.Common.hintTapToRevealAll : L10n.Common.hintTapToRevealTranslation
     }
 }

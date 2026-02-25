@@ -1,5 +1,3 @@
-// UI/Learn/WordDetailView.swift
-
 import SwiftUI
 
 struct WordDetailView: View {
@@ -17,58 +15,35 @@ struct WordDetailView: View {
         List {
             Section(L10n.Common.wordSection) {
                 VStack(alignment: .leading, spacing: 10) {
-                    HStack(alignment: .firstTextBaseline, spacing: 12) {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(word.korean)
-                                .font(.system(size: 34, weight: .semibold))
+                    WordCardHeaderView(
+                        korean: word.korean,
+                        transcriptionRR: word.transcriptionRR
+                    ) {
+                        speech.speakKorean(word.korean)
+                    }
 
-                            if let rr = normalizedRR(word.transcriptionRR) {
-                                Text(rr)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                            }
+                    Text(word.translation)
+                        .foregroundStyle(.secondary)
 
-                            Text(word.translation)
-                                .foregroundStyle(.secondary)
-                        }
-
-                        Spacer()
-
-                        Button {
-                            speech.speakKorean(word.korean)
-                        } label: {
-                            Image(systemName: "speaker.wave.2.fill")
-                                .foregroundStyle(.primary)
-                        }
-                        .buttonStyle(.borderless)
-                        .accessibilityLabel("Произнести слово")
+                    if let imageName = word.imageAssetName {
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
                 }
                 .padding(.vertical, 2)
             }
 
             Section(L10n.Common.exampleSection) {
-                if let example = word.example, !example.isEmpty {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack(alignment: .firstTextBaseline, spacing: 12) {
-                            Text(example)
-
-                            Spacer()
-
-                            Button {
-                                speech.speakKorean(example)
-                            } label: {
-                                Image(systemName: "speaker.wave.2.fill")
-                                    .foregroundStyle(.primary)
-                            }
-                            .buttonStyle(.borderless)
-                            .accessibilityLabel("Произнести пример")
-                        }
-
-                        if let exTr = word.exampleTranslation, !exTr.isEmpty {
-                            Text(exTr)
-                                .foregroundStyle(.secondary)
-                        }
+                if let example = normalized(word.example) {
+                    ExampleBlockView(
+                        example: example,
+                        exampleTranslation: word.exampleTranslation,
+                        isRevealed: .constant(true) // в деталке всегда видно
+                    ) {
+                        speech.speakKorean(example)
                     }
                 } else {
                     Text(L10n.WordDetail.noExample)
@@ -86,8 +61,8 @@ struct WordDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    private func normalizedRR(_ rr: String?) -> String? {
-        guard let rr = rr?.trimmingCharacters(in: .whitespacesAndNewlines), !rr.isEmpty else { return nil }
-        return rr
+    private func normalized(_ s: String?) -> String? {
+        guard let s = s?.trimmingCharacters(in: .whitespacesAndNewlines), !s.isEmpty else { return nil }
+        return s
     }
 }
