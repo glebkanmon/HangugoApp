@@ -4,15 +4,14 @@ import Combine
 @MainActor
 final class NewWordsSessionViewModel: ObservableObject {
 
-    // MARK: - Types
     enum SessionState: Equatable {
-        case fresh     // ещё не приняли решение (первый показ)
-        case learning  // выбрали "Начать учить"
+        case fresh
+        case learning
     }
 
     private enum Phase: Equatable {
-        case selecting     // набираем goal слов через "Начать учить"
-        case practicing    // крутим только learning-слова до "Запомнил(а)" на всех
+        case selecting
+        case practicing
     }
 
     struct SessionWord: Identifiable, Equatable {
@@ -33,25 +32,24 @@ final class NewWordsSessionViewModel: ObservableObject {
     @Published private(set) var masteredCount: Int = 0
     @Published var errorMessage: String?
 
-    // MARK: - Dependencies (DI only)
+    // MARK: - Dependencies
     private let srs: SRSService
     private let known: KnownWordsService
 
     // MARK: - Config
     private let nearEndShuffleWindow: Int
     private var firstReviewTomorrow: Bool = true
-
-    /// Сколько элементов держим одновременно в очереди на этапе выбора.
     private var targetQueueSize: Int = 0
 
-    // MARK: - Private state
+    // MARK: - Internal
     private var remainingNewWords: [Word] = []
     private var phase: Phase = .selecting
-
-    /// Набор слов, для которых нажали "Начать учить"
     private var learningWordIds: Set<String> = []
 
-    // ✅ DI: сервисы обязательны, никаких FileStore внутри VM
+    private var q = SessionQueue<SessionWord>(id: { $0.id }) {
+        didSet { queue = q.items } // ✅ UI всегда видит актуальный массив
+    }
+
     init(
         srs: SRSService,
         known: KnownWordsService,
@@ -63,8 +61,8 @@ final class NewWordsSessionViewModel: ObservableObject {
     }
 
     // MARK: - Computed
-    var currentItem: SessionWord? { queue.first }
-    var currentWord: Word? { queue.first?.word }
+    var currentItem: SessionWord? { q.current }
+    var currentWord: Word? { q.current?.word }
 
     var isFinished: Bool { goal > 0 && masteredCount >= goal }
 
@@ -75,7 +73,7 @@ final class NewWordsSessionViewModel: ObservableObject {
 
     private var learningCount: Int { learningWordIds.count }
 
-    // MARK: - Session start
+    // MARK: - Start
     func start(words: [Word], sessionSize: Int, firstReviewTomorrow: Bool) {
         self.firstReviewTomorrow = firstReviewTomorrow
 
@@ -89,7 +87,6 @@ final class NewWordsSessionViewModel: ObservableObject {
             let srsIds = Set(srs.allWordIds())
             let knownIds = Set(known.allWordIds())
 
-            // Новые слова = не в SRS и не в Known
             var newWords = words.filter { !srsIds.contains($0.id) && !knownIds.contains($0.id) }
             newWords.shuffle()
 
@@ -99,22 +96,22 @@ final class NewWordsSessionViewModel: ObservableObject {
             errorMessage = nil
 
             guard goal > 0 else {
-                queue = []
+                q.setItems([])
                 remainingNewWords = []
                 targetQueueSize = 0
                 return
             }
 
-            // На этапе выбора держим небольшой пул
             targetQueueSize = min(goal, 5)
 
             let initial = Array(newWords.prefix(targetQueueSize))
-            queue = initial.map { SessionWord(word: $0, state: .fresh) }
+            q.setItems(initial.map { SessionWord(word: $0, state: .fresh) })
 
             remainingNewWords = Array(newWords.dropFirst(targetQueueSize))
+
         } catch {
             errorMessage = error.localizedDescription
-            queue = []
+            q.setItems([])
             remainingNewWords = []
             goal = 0
             masteredCount = 0
@@ -124,14 +121,12 @@ final class NewWordsSessionViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Actions (Fresh)
-    /// "Уже знаю" — помечаем Known, заменяем на другое новое слово
-    /// Важно: заменяем только пока не набрали learningCount == goal.
+    // MARK: - Fresh actions
     func markAlreadyKnown() {
-        guard let item = queue.first else { return }
+        guard let item = q.current else { return }
 
         do {
-            _ = queue.removeFirst()
+            _ = q.popCurrent()
 
             known.addKnown(wordId: item.word.id)
             try known.persist()
@@ -139,9 +134,8 @@ final class NewWordsSessionViewModel: ObservableObject {
             if phase == .selecting {
                 refillFreshIfNeeded()
 
-                // Если новых слов больше нет и набрать цель нельзя — корректируем goal по факту
                 if remainingNewWords.isEmpty,
-                   queue.allSatisfy({ $0.state == .learning }),
+                   q.items.allSatisfy({ $0.state == .learning }),
                    learningCount < goal {
                     goal = learningCount
                 }
@@ -151,13 +145,15 @@ final class NewWordsSessionViewModel: ObservableObject {
         }
     }
 
-    /// "Начать учить" — переводим слово в learning и дальше оно участвует в круге
-    /// Как только learningCount достигнет goal → переходим в фазу practising (никаких новых слов).
     func startLearning() {
-        guard !queue.isEmpty else { return }
+        guard !q.isEmpty else { return }
 
-        let id = queue[0].word.id
-        queue[0].state = .learning
+        // обновляем state у текущего
+        var items = q.items
+        let id = items[0].word.id
+        items[0].state = .learning
+        q.setItems(items)
+
         learningWordIds.insert(id)
 
         showLater()
@@ -167,31 +163,16 @@ final class NewWordsSessionViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Actions (Learning)
-    /// "Показать ещё" — перемещаем ближе к концу
+    // MARK: - Learning actions
     func showLater() {
-        guard !queue.isEmpty else { return }
-
-        let item = queue.removeFirst()
-        if queue.isEmpty {
-            queue.append(item)
-            return
-        }
-
-        let n = queue.count
-        let window = min(nearEndShuffleWindow, n)
-        let startIndex = max(0, n - window)
-        let insertIndex = Int.random(in: startIndex...n) // n == append
-        queue.insert(item, at: insertIndex)
+        q.moveCurrentNearEnd(window: nearEndShuffleWindow)
     }
 
-    /// "Запомнил(а)" — добавляем в SRS и убираем из круга.
-    /// В фазе practicing — новых слов не добавляем вообще.
     func markMastered() {
-        guard let item = queue.first else { return }
+        guard let item = q.current else { return }
 
         do {
-            _ = queue.removeFirst()
+            _ = q.popCurrent()
 
             srs.addNewWordToSRS(wordId: item.word.id, firstReviewTomorrow: firstReviewTomorrow)
             try srs.persist()
@@ -200,19 +181,17 @@ final class NewWordsSessionViewModel: ObservableObject {
             learningWordIds.remove(item.word.id)
 
             if masteredCount >= goal {
-                queue = []
+                q.setItems([])
                 remainingNewWords = []
                 return
             }
 
-            // Если ещё выбираем learning-слова и их пока меньше цели — можно добрать свежие
             if phase == .selecting {
                 if learningCount < goal {
                     refillFreshIfNeeded()
 
-                    // Если добрать невозможно — корректируем goal
                     if remainingNewWords.isEmpty,
-                       queue.allSatisfy({ $0.state == .learning }),
+                       q.items.allSatisfy({ $0.state == .learning }),
                        learningCount < goal {
                         goal = learningCount
                     }
@@ -220,9 +199,7 @@ final class NewWordsSessionViewModel: ObservableObject {
                     enterPracticePhase()
                 }
             } else {
-                // practicing: ничего не добавляем, просто продолжаем круг по оставшимся learning
-                if queue.isEmpty {
-                    // теоретически может случиться, если learningCount < goal (не хватило слов)
+                if q.isEmpty {
                     goal = masteredCount
                 }
             }
@@ -232,13 +209,11 @@ final class NewWordsSessionViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Backward compatible (старые имена)
+    // MARK: - Backward compatible aliases
     func markNotYet() { showLater() }
     func markKnown() { markMastered() }
 
-    // MARK: - Private helpers
-
-    /// Добавляем свежие слова только на этапе выбора и только пока learningCount < goal.
+    // MARK: - Private
     private func refillFreshIfNeeded() {
         guard phase == .selecting else { return }
         guard learningCount < goal else {
@@ -246,27 +221,31 @@ final class NewWordsSessionViewModel: ObservableObject {
             return
         }
 
-        while queue.count < targetQueueSize,
+        var items = q.items
+
+        while items.count < targetQueueSize,
               !remainingNewWords.isEmpty,
               learningCount < goal {
             let next = remainingNewWords.removeFirst()
-            queue.append(SessionWord(word: next, state: .fresh))
+            items.append(SessionWord(word: next, state: .fresh))
         }
 
-        if queue.isEmpty, let _ = remainingNewWords.first, learningCount < goal {
+        if items.isEmpty,
+           !remainingNewWords.isEmpty,
+           learningCount < goal {
             let next = remainingNewWords.removeFirst()
-            queue.append(SessionWord(word: next, state: .fresh))
+            items.append(SessionWord(word: next, state: .fresh))
         }
+
+        q.setItems(items)
     }
 
-    /// Переход в режим "крутим только выбранные learning-слова"
     private func enterPracticePhase() {
         phase = .practicing
 
-        // Убираем все свежие слова (по ним уже не принимаем решение)
-        queue.removeAll { $0.state == .fresh }
-
-        // Перемешаем, чтобы не было ощущения "всегда одно и то же"
-        queue.shuffle()
+        var items = q.items
+        items.removeAll { $0.state == .fresh }
+        items.shuffle()
+        q.setItems(items)
     }
 }

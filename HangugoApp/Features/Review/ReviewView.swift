@@ -20,73 +20,32 @@ struct ReviewView: View {
 
     var body: some View {
         List {
-            Section {
-                ProgressView(value: vm.progress)
+            SessionProgressSectionView(
+                progress: vm.progress,
+                labelText: "\(L10n.Review.progressPrefix) \(vm.completedCount) / \(vm.totalCount)",
+                accessibilityText: "\(L10n.Review.progressPrefix) \(vm.completedCount) из \(vm.totalCount)"
+            )
 
-                HStack {
-                    Text("Прогресс: \(vm.completedCount) / \(vm.totalCount)")
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                }
-                .accessibilityLabel("Прогресс \(vm.completedCount) из \(vm.totalCount)")
-            }
-
-            Section(L10n.Review.todaySection) {
-                if let error = vm.errorMessage {
-                    Text(error).foregroundStyle(.secondary)
-                } else {
-                    Text("\(L10n.Review.dueCountPrefix) \(vm.dueCount)")
-                }
-            }
-
-            if vm.dueCount == 0 {
+            if let error = vm.errorMessage {
                 Section {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(L10n.Review.doneTitle)
-                            .font(.headline)
-                        Text(L10n.Review.doneSubtitle)
-                            .foregroundStyle(.secondary)
-
-                        NavigationLink(L10n.Review.goToPractice) {
-                            PracticeView(container: container)
-                        }
-                    }
-                    .padding(.vertical, 4)
+                    Text(error).foregroundStyle(.secondary)
                 }
+            } else if vm.dueCount == 0 {
+                SessionDoneSectionView(
+                    title: L10n.Review.doneTitle,
+                    subtitle: L10n.Review.doneSubtitle,
+                    actionTitle: L10n.Review.goToPractice,
+                    destination: AnyView(PracticeView(container: container))
+                )
             } else if let word = vm.currentWord {
-                Section(L10n.Common.wordSection) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        WordCardHeaderView(
-                            korean: word.korean,
-                            transcriptionRR: word.transcriptionRR
-                        ) {
-                            speech.speakKorean(word.korean)
-                        }
+                WordPromptSectionView(
+                    word: word,
+                    isRevealed: $isRevealed,
+                    speech: speech,
+                    revealAccessibilityLabel: "Показать перевод"
+                )
 
-                        RevealableContent(
-                            isRevealed: $isRevealed,
-                            hintText: hintText(hasImage: word.imageAssetName != nil),
-                            accessibilityLabel: "Показать перевод"
-                        ) {
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text(word.translation)
-                                    .foregroundStyle(.secondary)
-
-                                if let imageName = word.imageAssetName {
-                                    Image(imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(maxWidth: .infinity)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                                }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }
-                    .padding(.vertical, 2)
-                }
-
-                if let example = normalized(word.example) {
+                if let example = word.example?.normalizedNonEmpty {
                     Section(L10n.Common.exampleSection) {
                         ExampleBlockView(
                             example: example,
@@ -98,23 +57,16 @@ struct ReviewView: View {
                     }
                 }
 
-                Section {
-                    Button {
+                SessionButtonSectionView(actions: [
+                    SessionButtonAction(title: "Вспомнил") {
                         vm.remembered()
                         isRevealed = false
-                    } label: {
-                        Text("Вспомнил")
-                            .fontWeight(.semibold)
-                    }
-
-                    Button {
+                    },
+                    SessionButtonAction(title: "Показать ещё") {
                         vm.showLater()
                         isRevealed = false
-                    } label: {
-                        Text("Показать ещё")
-                            .fontWeight(.semibold)
                     }
-                }
+                ])
             } else {
                 Section {
                     Text(L10n.Review.missingWord)
@@ -131,14 +83,5 @@ struct ReviewView: View {
             vm.load()
             isRevealed = false
         }
-    }
-
-    private func normalized(_ s: String?) -> String? {
-        guard let s = s?.trimmingCharacters(in: .whitespacesAndNewlines), !s.isEmpty else { return nil }
-        return s
-    }
-
-    private func hintText(hasImage: Bool) -> String {
-        hasImage ? L10n.Common.hintTapToRevealAll : L10n.Common.hintTapToRevealTranslation
     }
 }

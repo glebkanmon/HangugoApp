@@ -15,8 +15,9 @@ final class ReviewViewModel: ObservableObject {
     private var wordsById: [String: Word] = [:]
 
     private let nearEndShuffleWindow: Int
-    private var queue: [String] = []                // wordIds
-    private var hadShowLater: Set<String> = []      // local difficulty signal
+
+    private var queue = SessionQueue<String>(id: { $0 })
+    private var hadShowLater: Set<String> = []
 
     init(
         wordsLoader: WordsLoading,
@@ -40,19 +41,17 @@ final class ReviewViewModel: ObservableObject {
 
             try srs.load()
 
-            // Берём due на этот момент и фиксируем очередь на всю сессию.
-            // Фильтруем те, которых нет в wordsById (на случай рассинхрона данных).
             let dueIds = srs.dueItems()
                 .map { $0.wordId }
                 .filter { wordsById[$0] != nil }
 
-            queue = dueIds
+            queue.setItems(dueIds)
             hadShowLater = []
 
             totalCount = dueIds.count
             completedCount = 0
             dueCount = queue.count
-            currentWord = queue.first.flatMap { wordsById[$0] }
+            currentWord = queue.current.flatMap { wordsById[$0] }
             errorMessage = nil
 
         } catch {
@@ -61,33 +60,26 @@ final class ReviewViewModel: ObservableObject {
             completedCount = 0
             dueCount = 0
             currentWord = nil
-            queue = []
+            queue.setItems([])
             hadShowLater = []
         }
     }
 
-    /// "Показать ещё" — НЕ трогаем SRS (чтобы не ломать текущую очередь),
-    /// просто запоминаем, что слово было трудным, и перемещаем ближе к концу.
+    /// "Показать ещё": не трогаем SRS внутри сессии, только очередь + локальный сигнал "трудно".
     func showLater() {
-        guard queue.count > 1 else { return }
-        let id = queue.removeFirst()
-        hadShowLater.insert(id)
+        guard let currentId = queue.currentId(), queue.count > 1 else { return }
 
-        let n = queue.count
-        let window = min(nearEndShuffleWindow, n)
-        let startIndex = max(0, n - window)
-        let insertIndex = Int.random(in: startIndex...n) // n == append
-        queue.insert(id, at: insertIndex)
+        hadShowLater.insert(currentId)
+        queue.moveCurrentNearEnd(window: nearEndShuffleWindow)
 
         dueCount = queue.count
-        currentWord = queue.first.flatMap { wordsById[$0] }
+        currentWord = queue.current.flatMap { wordsById[$0] }
     }
 
-    /// "Вспомнил" — применяем SM-2 и убираем слово из очереди.
-    /// Если слово ранее было "Показать ещё", считаем его трудным → .hard, иначе .normal.
+    /// "Вспомнил": применяем SM-2 и убираем слово из очереди.
     func remembered() {
-        guard let id = queue.first else { return }
-        guard let _ = wordsById[id] else { return }
+        guard let id = queue.currentId() else { return }
+        guard wordsById[id] != nil else { return }
 
         do {
             let rating: ReviewRating = hadShowLater.contains(id) ? .hard : .normal
@@ -95,12 +87,12 @@ final class ReviewViewModel: ObservableObject {
             srs.applySM2(wordId: id, rating: rating)
             try srs.persist()
 
-            _ = queue.removeFirst()
+            _ = queue.popCurrent()
             hadShowLater.remove(id)
 
             completedCount += 1
             dueCount = queue.count
-            currentWord = queue.first.flatMap { wordsById[$0] }
+            currentWord = queue.current.flatMap { wordsById[$0] }
 
         } catch {
             errorMessage = error.localizedDescription

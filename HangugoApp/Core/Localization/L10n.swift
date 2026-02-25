@@ -64,6 +64,7 @@ enum L10n {
         static let btnNormal = "Нормально"
         static let btnEasy = "Легко"
         static let missingWord = "Не удалось найти слово для текущей карточки SRS."
+        static let progressPrefix = "Запомнил:"
     }
 
     enum Settings {

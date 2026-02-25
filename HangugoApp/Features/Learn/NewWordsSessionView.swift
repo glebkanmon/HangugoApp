@@ -24,70 +24,37 @@ struct NewWordsSessionView: View {
 
     var body: some View {
         List {
-            Section {
-                ProgressView(value: vm.progress)
-                HStack {
-                    Text("\(L10n.NewWordsSession.progressPrefix) \(vm.masteredCount) / \(vm.goal)")
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                }
-            }
+            SessionProgressSectionView(
+                progress: vm.progress,
+                labelText: "\(L10n.NewWordsSession.progressPrefix) \(vm.masteredCount) / \(vm.goal)",
+                accessibilityText: "\(L10n.NewWordsSession.progressPrefix) \(vm.masteredCount) из \(vm.goal)"
+            )
 
             if let error = vm.errorMessage {
                 Section(L10n.NewWordsSession.errorSection) {
-                    Text(error)
-                        .foregroundStyle(.secondary)
+                    Text(error).foregroundStyle(.secondary)
                 }
             }
 
             if vm.goal == 0 {
-                Section {
-                    Text(L10n.NewWordsSession.noNewWordsTitle)
-                        .font(.headline)
-                    Text(L10n.NewWordsSession.noNewWordsSubtitle)
-                        .foregroundStyle(.secondary)
-                }
+                SessionDoneSectionView(
+                    title: L10n.NewWordsSession.noNewWordsTitle,
+                    subtitle: L10n.NewWordsSession.noNewWordsSubtitle
+                )
             } else if vm.isFinished {
-                Section {
-                    Text(L10n.NewWordsSession.finishedTitle)
-                        .font(.headline)
-                    Text(L10n.NewWordsSession.finishedSubtitle)
-                        .foregroundStyle(.secondary)
-                }
+                SessionDoneSectionView(
+                    title: L10n.NewWordsSession.finishedTitle,
+                    subtitle: L10n.NewWordsSession.finishedSubtitle
+                )
             } else if let item = vm.currentItem {
-                Section(L10n.Common.wordSection) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        WordCardHeaderView(
-                            korean: item.word.korean,
-                            transcriptionRR: item.word.transcriptionRR
-                        ) {
-                            speech.speakKorean(item.word.korean)
-                        }
+                WordPromptSectionView(
+                    word: item.word,
+                    isRevealed: $isRevealed,
+                    speech: speech,
+                    revealAccessibilityLabel: "Показать перевод"
+                )
 
-                        RevealableContent(
-                            isRevealed: $isRevealed,
-                            hintText: hintText(hasImage: item.word.imageAssetName != nil),
-                            accessibilityLabel: "Показать перевод"
-                        ) {
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text(item.word.translation)
-                                    .foregroundStyle(.secondary)
-
-                                if let imageName = item.word.imageAssetName {
-                                    Image(imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(maxWidth: .infinity)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                                }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }
-                    .padding(.vertical, 2)
-                }
-
-                if let example = normalized(item.word.example) {
+                if let example = item.word.example?.normalizedNonEmpty {
                     Section(L10n.Common.exampleSection) {
                         ExampleBlockView(
                             example: example,
@@ -99,47 +66,7 @@ struct NewWordsSessionView: View {
                     }
                 }
 
-                Section {
-                    switch item.state {
-                    case .fresh:
-                        Button {
-                            resetRevealAndPerform {
-                                vm.markAlreadyKnown()
-                            }
-                        } label: {
-                            Text(L10n.NewWordsSession.btnAlreadyKnow)
-                                .fontWeight(.semibold)
-                        }
-
-                        Button {
-                            resetRevealAndPerform {
-                                vm.startLearning()
-                            }
-                        } label: {
-                            Text(L10n.NewWordsSession.btnStartLearning)
-                                .fontWeight(.semibold)
-                        }
-
-                    case .learning:
-                        Button {
-                            resetRevealAndPerform {
-                                vm.showLater()
-                            }
-                        } label: {
-                            Text(L10n.NewWordsSession.btnShowLater)
-                                .fontWeight(.semibold)
-                        }
-
-                        Button {
-                            resetRevealAndPerform {
-                                vm.markMastered()
-                            }
-                        } label: {
-                            Text(L10n.NewWordsSession.btnMastered)
-                                .fontWeight(.semibold)
-                        }
-                    }
-                }
+                SessionButtonSectionView(actions: actions(for: item))
             } else {
                 Section {
                     Text(L10n.NewWordsSession.loading)
@@ -166,12 +93,27 @@ struct NewWordsSessionView: View {
         action()
     }
 
-    private func normalized(_ s: String?) -> String? {
-        guard let s = s?.trimmingCharacters(in: .whitespacesAndNewlines), !s.isEmpty else { return nil }
-        return s
-    }
+    private func actions(for item: NewWordsSessionViewModel.SessionWord) -> [SessionButtonAction] {
+        switch item.state {
+        case .fresh:
+            return [
+                SessionButtonAction(title: L10n.NewWordsSession.btnAlreadyKnow) {
+                    resetRevealAndPerform { vm.markAlreadyKnown() }
+                },
+                SessionButtonAction(title: L10n.NewWordsSession.btnStartLearning) {
+                    resetRevealAndPerform { vm.startLearning() }
+                }
+            ]
 
-    private func hintText(hasImage: Bool) -> String {
-        hasImage ? L10n.Common.hintTapToRevealAll : L10n.Common.hintTapToRevealTranslation
+        case .learning:
+            return [
+                SessionButtonAction(title: L10n.NewWordsSession.btnShowLater) {
+                    resetRevealAndPerform { vm.showLater() }
+                },
+                SessionButtonAction(title: L10n.NewWordsSession.btnMastered) {
+                    resetRevealAndPerform { vm.markMastered() }
+                }
+            ]
+        }
     }
 }
