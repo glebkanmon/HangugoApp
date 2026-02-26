@@ -30,10 +30,10 @@ final class LearnViewModel: ObservableObject {
         self.selectedTags = selectedTags
     }
 
-    func load() {
+    func load() async {
         do {
             // 1) слова
-            words = try wordsLoader.loadWords()
+            words = try await wordsLoader.loadWords()
 
             // 2) SRS
             try srs.load()
@@ -48,7 +48,7 @@ final class LearnViewModel: ObservableObject {
             wordsForLearning = filter(words: words, by: selectedTags.tags)
             categoriesSummary = summary(for: selectedTags.tags)
 
-            // 5) новые (только в wordsForLearning)
+            // 5) новые
             newWordsAvailable = wordsForLearning.filter { !srsIds.contains($0.id) && !knownIds.contains($0.id) }.count
 
             // 6) due сегодня

@@ -34,9 +34,9 @@ final class ReviewViewModel: ObservableObject {
         return min(1.0, Double(completedCount) / Double(totalCount))
     }
 
-    func load() {
+    func load() async {
         do {
-            let words = try wordsLoader.loadWords()
+            let words = try await wordsLoader.loadWords()
             wordsById = Dictionary(uniqueKeysWithValues: words.map { ($0.id, $0) })
 
             try srs.load()

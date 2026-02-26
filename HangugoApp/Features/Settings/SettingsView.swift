@@ -18,6 +18,9 @@ struct SettingsView: View {
     @State private var voices: [AVSpeechSynthesisVoice] = []
     @State private var selectedVoiceId: String?
     @State private var isVoiceHelpPresented: Bool = false
+    
+    @State private var isSeedingWords: Bool = false
+    @State private var wordsSeedStatusText: String?
 
     private let speech: SpeechService
 
@@ -31,6 +34,10 @@ struct SettingsView: View {
         Form {
             newWordsSection
             speechSection
+
+            #if DEBUG
+            debugFirestoreSection
+            #endif
         }
         .navigationTitle(L10n.Settings.navTitle)
         .navigationBarTitleDisplayMode(.inline)
@@ -150,6 +157,41 @@ struct SettingsView: View {
             }
         )
     }
+    
+#if DEBUG
+private var debugFirestoreSection: some View {
+    Section("Debug · Firebase") {
+        Button {
+            Task {
+                await seedWordsToFirebase()
+            }
+        } label: {
+            HStack {
+                Text("Выгрузить слова в Firebase")
+
+                Spacer()
+
+                if isSeedingWords {
+                    ProgressView()
+                }
+            }
+        }
+        .disabled(isSeedingWords)
+
+        if let wordsSeedStatusText {
+            Text(wordsSeedStatusText)
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+
+        Text("Кнопка только для debug. Обновляет записи по id и пропускает смысловые дубли.")
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+    }
+}
+#endif
+    
+    
 
     // MARK: - Helpers
 
@@ -168,6 +210,21 @@ struct SettingsView: View {
     private func loadVoices() {
         voices = speech.availableKoreanVoices()
         selectedVoiceId = speech.currentVoiceIdentifier()
+    }
+    
+    @MainActor
+    private func seedWordsToFirebase() async {
+        guard !isSeedingWords else { return }
+
+        isSeedingWords = true
+        defer { isSeedingWords = false }
+
+        do {
+            let result = try await container.makeWordsSeeder().seedFromBundle()
+            wordsSeedStatusText = result.summary
+        } catch {
+            wordsSeedStatusText = "Ошибка выгрузки: \(error.localizedDescription)"
+        }
     }
 }
 

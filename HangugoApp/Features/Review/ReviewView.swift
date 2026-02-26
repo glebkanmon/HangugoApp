@@ -79,8 +79,8 @@ struct ReviewView: View {
             isRevealed = false
         }
         .navigationTitle(L10n.Review.navTitle)
-        .onAppear {
-            vm.load()
+        .task {
+            await vm.load()
             isRevealed = false
         }
     }

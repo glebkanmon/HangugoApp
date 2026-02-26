@@ -22,7 +22,10 @@ final class AppContainer {
     // MARK: - Init
 
     init(
-        wordsLoader: WordsLoading = BundledWordsLoaderAdapter(),
+        wordsLoader: WordsLoading = FallbackWordsLoader(
+            primary: FirestoreWordsLoader(),
+            fallback: BundledWordsLoaderAdapter()
+        ),
         makeSRSStore: @escaping () -> SRSStore = { FileSRSStore() },
         makeKnownStore: @escaping () -> KnownWordsStore = { FileKnownWordsStore() },
         makeSelectedTagsStore: @escaping () -> SelectedTagsStore = { FileSelectedTagsStore() },
@@ -49,5 +52,9 @@ final class AppContainer {
 
     func makeSelectedTagsService() -> SelectedTagsService {
         SelectedTagsService(store: makeSelectedTagsStore())
+    }
+    
+    func makeWordsSeeder() -> FirebaseWordsSeeder {
+        FirebaseWordsSeeder()
     }
 }

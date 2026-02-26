@@ -102,7 +102,9 @@ struct LearnView: View {
             }
         }
         .navigationTitle(L10n.Learn.navTitle)
-        .onAppear { vm.load() }
+        .task {
+            await vm.load()
+        }
     }
 }
 

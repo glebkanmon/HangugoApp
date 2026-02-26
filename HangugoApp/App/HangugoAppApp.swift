@@ -1,15 +1,14 @@
-//
-//  HangugoAppApp.swift
-//  HangugoApp
-//
-//  Created by Gleb Monetchikov on 10.01.2026.
-//
-
 import SwiftUI
+import FirebaseCore
 
 @main
 struct HangugoAppApp: App {
-    private let container = AppContainer()
+    private let container: AppContainer
+
+    init() {
+        FirebaseApp.configure()
+        self.container = AppContainer()
+    }
 
     var body: some Scene {
         WindowGroup {
